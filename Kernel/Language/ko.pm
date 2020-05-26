@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -24,7 +24,7 @@ sub Data {
     $Self->{DateFormatShort}     = '';
     $Self->{DateInputFormat}     = '';
     $Self->{DateInputFormatLong} = '';
-    $Self->{Completeness}        = 0.973133820778779;
+    $Self->{Completeness}        = 0.96799864544531;
 
     # csv separator
     $Self->{Separator}         = '';
@@ -674,6 +674,8 @@ sub Data {
         'Owner' => '소유자',
         'Responsible' => '책임있는',
         'Ticket lock' => '티켓 잠금',
+        'Dynamic fields' => '동적 필드',
+        'Add dynamic field' => '',
         'Create times' => '생성시간',
         'No create time settings.' => '생성 시간이 설정되지 않았습니다.',
         'Ticket created' => '티켓이 생성되었습니다.',
@@ -687,6 +689,10 @@ sub Data {
         'No change time settings.' => '변경 시간 설정이 없습니다.',
         'Ticket changed' => '티켓 변경됨',
         'Ticket changed between' => '티켓 변경 사이',
+        'Last close times' => '',
+        'No last close time settings.' => '',
+        'Ticket last close' => '',
+        'Ticket last close between' => '',
         'Close times' => '끝나는 시간',
         'No close time settings.' => '가까운 시간 설정이 없습니다.',
         'Ticket closed' => '티켓이 폐쇄되었습니다.',
@@ -724,7 +730,6 @@ sub Data {
         'New customer ID' => '신규 고객 ID',
         'New title' => '새 직함',
         'New type' => '새로운 유형',
-        'New Dynamic Field Values' => '새로운 동적 필드 값',
         'Archive selected tickets' => '선택한 티켓 보관 처리',
         'Add Note' => '메모 추가',
         'Visible for customer' => '고객에게 공개',
@@ -2158,6 +2163,14 @@ sub Data {
         'Do you really want to delete this template?' => '이 템플릿을 정말로 삭제 하시겠습니까?',
         'A standard template with this name already exists!' => '이 이름을 가진 표준 템플릿이 이미 존재합니다!',
         'Template' => '템플릿',
+        'To get the first 20 characters of the subject of the current/latest agent article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types.' =>
+            '',
+        'To get the first 5 lines of the body of the current/latest agent article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types.' =>
+            '',
+        'To get the first 20 characters of the subject of the current/latest article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types.' =>
+            '',
+        'To get the first 5 lines of the body of the current/latest article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types.' =>
+            '',
         'Create type templates only supports this smart tags' => '만들기 유형 템플릿은 이 스마트 태그만 지원합니다.',
         'Example template' => '템플릿 예제',
         'The current ticket state is' => '현재 티켓 상태는 다음과 같습니다.',
@@ -2753,7 +2766,6 @@ sub Data {
         'Outgoing message' => '보내는 메시지',
         'Internal message' => '내부 메시지',
         'Sending of this message has failed.' => '이 메시지를 보내지 못했습니다.',
-        'This message has been queued for sending.' => '이 메시지는 전송 대기중입니다.',
         'Resize' => '크기 조정',
         'Mark this article as read' => '이 기사를 읽음으로 표시 하십시오.',
         'Show Full Text' => '전체 텍스트 보기',
@@ -2814,7 +2826,7 @@ sub Data {
         # Template: CustomerAccept
         'Dear Customer,' => '친애하는 고객,',
         'thank you for using our services.' => '우리의 서비스를 이용해주셔서 감사합니다.',
-        'Yes, I accepted your license.' => '네, 면허를 받아 들였습니다.',
+        'Yes, I accept your license.' => '',
 
         # Template: TicketCustomerIDSelection
         'The customer ID is not changeable, no other customer ID can be assigned to this ticket.' =>
@@ -2925,7 +2937,6 @@ sub Data {
         # Template: DashboardEventsTicketCalendar
         'Event Information' => '이벤트 정보',
         'Ticket fields' => '타켓 필드',
-        'Dynamic fields' => '동적 필드',
 
         # Template: Error
         'Really a bug? 5 out of 10 bug reports result from a wrong or incomplete installation of OTRS.' =>
@@ -3321,6 +3332,7 @@ sub Data {
 
         # JS Template: DialogDeployment
         'Deployment comment...' => '배포 설명...',
+        'This field can have no more than 250 characters.' => '',
         'Deploying, please wait...' => '배포 중입니다. 잠시 기다려주십시오...',
         'Preparing to deploy, please wait...' => '배포 준비 중입니다, 기다려주세요...',
         'Deploy now' => '지금 배포',
@@ -4013,7 +4025,7 @@ sub Data {
         'Monthly' => '월간',
         'Yearly' => '연간',
         'every' => '...마다',
-        'for %s time(s)' => '1 % s 시간 동안',
+        'for %s time(s)' => '1 %s 시간 동안',
         'until ...' => '때까지...',
         'for ... time(s)' => '...시간(들) 동안',
         'until %s' => '%s 까지',
@@ -4124,6 +4136,8 @@ sub Data {
         'The following tickets were locked: %s.' => '다음 티켓이 잠겼습니다 : %s.',
 
         # Perl Module: Kernel/Modules/AgentTicketCompose.pm
+        'Article subject will be empty if the subject contains only the ticket hook!' =>
+            '',
         'Address %s replaced with registered customer address.' => '주소 %s는 등록 된 고객 주소로 바뀝니다.',
         'Customer user automatically added in Cc.' => 'Cc에 고객 사용자가 자동으로 추가되었습니다.',
 
@@ -4365,6 +4379,8 @@ sub Data {
         # Perl Module: Kernel/Modules/CustomerTicketMessage.pm
         'Check SysConfig setting for %s::QueueDefault.' => '%s::QueueDefault에 대한 SysConfig 설정을 확인하십시오.',
         'Check SysConfig setting for %s::TicketTypeDefault.' => '%s::TicketTypeDefault에 대한 SysConfig 설정을 확인하십시오.',
+        'You don\'t have sufficient permissions for ticket creation in default queue.' =>
+            '',
 
         # Perl Module: Kernel/Modules/CustomerTicketOverview.pm
         'Need CustomerID!' => '고객 ID가 필요합니다!',
@@ -4973,6 +4989,8 @@ sub Data {
         'Client Connection Charset' => '클라이언트 연결 문자 세트',
         'Setting character_set_client needs to be utf8.' => 'character_set_client 설정은 utf8이어야합니다.',
         'Server Database Charset' => '서버 데이터베이스 문자 세트',
+        'This character set is not yet supported, please see https://bugs.otrs.org/show_bug.cgi?id=12361. Please convert your database to the character set \'utf8\'.' =>
+            '',
         'The setting character_set_database needs to be \'utf8\'.' => '설정 character_set_database는 \'utf8\'이어야합니다.',
         'Table Charset' => '표 문자 집합',
         'There were tables found which do not have \'utf8\' as charset.' =>
@@ -5494,6 +5512,7 @@ sub Data {
         'Deleting the field and its data. This may take a while...' => '필드 및 해당 데이터 삭제. 이 작업은 다소 시간이 걸릴 수 있습니다...',
 
         # JS File: Core.Agent.Admin.GenericAgent
+        'Remove this dynamic field' => '',
         'Remove selection' => '선택 항목 삭제',
         'Do you really want to delete this generic agent job?' => '',
         'Delete this Event Trigger' => '이 이벤트 트리거 삭제',
@@ -6178,6 +6197,8 @@ Thanks for your help!
         'Checks for queued outgoing emails to be sent.' => '보낸 대기중인 보내는 전자 메일을 확인합니다.',
         'Checks if an E-Mail is a followup to an existing ticket by searching the subject for a valid ticket number.' =>
             '유효한 티켓 번호를 검색하여 전자 메일이 기존 티켓의 후속 조치인지 확인합니다.',
+        'Checks if an email is a follow-up to an existing ticket with external ticket number which can be found by ExternalTicketNumberRecognition filter module.' =>
+            '',
         'Checks the SystemID in ticket number detection for follow-ups. If not enabled, SystemID will be changed after using the system.' =>
             '후속 조치를 위해 티켓 번호 검색에서 SystemID를 확인합니다. 활성화되지 않은 경우 시스템을 사용한 후 SystemID가 변경됩니다.',
         'Checks the availability of OTRS Business Solution™ for this system.' =>
@@ -6375,10 +6396,10 @@ Thanks for your help!
         'Define the start day of the week for the date picker for the indicated calendar.' =>
             '표시된 달력의 날짜 선택 도구에 대한 시작 요일을 정의하십시오.',
         'Define the start day of the week for the date picker.' => '날짜 선택 도구의 시작 요일을 정의하십시오.',
-        'Define which avatar default image should be used for the article view if no gravatar is assigned to the mail address. Check http://gravatar.com/site/implement/images/ for further information.' =>
+        'Define which avatar default image should be used for the article view if no gravatar is assigned to the mail address. Check https://gravatar.com/site/implement/images/ for further information.' =>
             '',
-        'Define which avatar default image should be used for the current agent if no gravatar is assigned to the mail address of the agent. Check http://gravatar.com/site/implement/images/ for further information.' =>
-            '상담원의 메일 주소에 gravatar가 할당되지 않은 경우 현재 상담원에 사용할 아바타 기본 이미지를 정의합니다. 자세한 내용은 http://gravatar.com/site/implement/images/ 를 확인하십시오.',
+        'Define which avatar default image should be used for the current agent if no gravatar is assigned to the mail address of the agent. Check https://gravatar.com/site/implement/images/ for further information.' =>
+            '',
         'Define which avatar engine should be used for the agent avatar on the header and the sender images in AgentTicketZoom. If \'None\' is selected, initials will be displayed instead. Please note that selecting anything other than \'None\' will transfer the encrypted email address of the particular user to an external service.' =>
             '에이전트 아바타에 사용할 아바타 엔진과 AgentTicketZoom의 보낸 사람 이미지를 정의하십시오. \'없음\'을 선택하면 대신 이니셜이 표시됩니다. \'없음\'이외의 다른 것을 선택하면 특정 사용자의 암호화 된 이메일 주소가 외부 서비스로 전송됩니다.',
         'Define which columns are shown in the linked appointment widget (LinkObject::ViewMode = "complex"). Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.' =>
@@ -7057,7 +7078,8 @@ Thanks for your help!
             'SOAP 핸들 (bin / cgi-bin / rpc.pl)에 액세스하기위한 사용자 이름을 정의합니다.',
         'Defines the users avatar. Please note: setting \'Active\' to 0 will only prevent agents from editing settings of this group in their personal preferences, but will still allow administrators to edit the settings of another user\'s behalf. Use \'PreferenceGroup\' to control in which area these settings should be shown in the user interface.' =>
             '사용자 아바타를 정의합니다. 참고 : \'활성\'을 0으로 설정하면 상담원이이 그룹의 개인 환경 설정에서 설정을 편집하지 못하게되지만 관리자가 다른 사용자를 대신하여 설정을 편집 할 수 있습니다. \'PreferenceGroup\'을 사용하여 이러한 설정을 사용자 인터페이스에 표시 할 영역을 제어하십시오.',
-        'Defines the valid state types for a ticket.' => '티켓의 유효한 상태 유형을 정의합니다.',
+        'Defines the valid state types for a ticket. If a ticket is in a state which have any state type from this setting, this ticket will be considered as open, otherwise as closed.' =>
+            '',
         'Defines the valid states for unlocked tickets. To unlock tickets the script "bin/otrs.Console.pl Maint::Ticket::UnlockTimeout" can be used.' =>
             '잠금 해제 된 티켓의 유효한 상태를 정의합니다. 티켓의 잠금을 해제하려면 "bin / otrs.Console.pl Maint :: Ticket :: UnlockTimeout"스크립트를 사용할 수 있습니다.',
         'Defines the viewable locks of a ticket. NOTE: When you change this setting, make sure to delete the cache in order to use the new value. Default: unlock, tmp_lock.' =>
@@ -7132,6 +7154,7 @@ Thanks for your help!
             '외부 스크립트 내용로드를 허용하려면 HTTP 헤더 "Content-Security-Policy"를 비활성화하십시오. 이 HTTP 헤더를 비활성화하면 보안 문제가 발생할 수 있습니다! 자신이하는 일을 아는 경우에만 사용을 중지하십시오!',
         'Disable HTTP header "X-Frame-Options: SAMEORIGIN" to allow OTRS to be included as an IFrame in other websites. Disabling this HTTP header can be a security issue! Only disable it, if you know what you are doing!' =>
             'HTTP 헤더 "X-Frame-Options : SAMEORIGIN"을 사용하지 않도록 설정하여 OTRS를 다른 웹 사이트의 IFrame으로 포함 할 수 있습니다. 이 HTTP 헤더를 비활성화하면 보안 문제가 발생할 수 있습니다! 자신이하는 일을 아는 경우에만 사용을 중지하십시오!',
+        'Disable autocomplete in the login screen.' => '',
         'Disable cloud services' => '클라우드 서비스 사용 중지',
         'Disables sending reminder notifications to the responsible agent of a ticket (Ticket::Responsible needs to be enabled).' =>
             '책임있는 에이전트에게 티켓 알림을 보내는 것을 비활성화합니다 (Ticket :: Responsible을 활성화해야합니다).',
@@ -7401,6 +7424,7 @@ Thanks for your help!
             '최종 사용자에게 번역 파일에 정의 된 CSV 파일의 구분 문자를 무시할 수 있습니다. 참고 : \'활성\'을 0으로 설정하면 상담원이이 그룹의 개인 환경 설정에서 설정을 편집하지 못하게되지만 관리자가 다른 사용자를 대신하여 설정을 편집 할 수 있습니다. \'PreferenceGroup\'을 사용하여 이러한 설정을 사용자 인터페이스에 표시 할 영역을 제어하십시오.',
         'Global Search Module.' => '글로벌 검색 모듈.',
         'Go to dashboard!' => '대시 보드로 이동!',
+        'Good PGP signature.' => '',
         'Google Authenticator' => 'Google OTP',
         'Graph: Bar Chart' => '그래프 : 막대 차트',
         'Graph: Line Chart' => '그래프 : 선 차트',
@@ -7556,6 +7580,8 @@ Thanks for your help!
             '서로 다른 스킨을 구성하여 서로 다른 고객을 구별하고 응용 프로그램 내에서 도메인별로 사용할 수 있습니다. 정규식 (정규식)을 사용하면 키 / 내용 쌍을 도메인과 일치하도록 구성 할 수 있습니다. "Key"의 값은 도메인과 일치해야하며 "Content"의 값은 시스템의 유효한 스킨이어야합니다. 올바른 형식의 정규식에 대한 예제 항목을 참조하십시오.',
         'It is possible to configure different themes, for example to distinguish between agents and customers, to be used on a per-domain basis within the application. Using a regular expression (regex), you can configure a Key/Content pair to match a domain. The value in "Key" should match the domain, and the value in "Content" should be a valid theme on your system. Please see the example entries for the proper form of the regex.' =>
             '에이전트와 고객을 구별하기 위해 응용 프로그램 내에서 도메인별로 사용되도록 다른 테마를 구성 할 수 있습니다. 정규식 (정규식)을 사용하면 키 / 내용 쌍을 도메인과 일치하도록 구성 할 수 있습니다. "Key"의 값은 도메인과 일치해야하며 "Content"의 값은 시스템의 유효한 테마 여야합니다. 올바른 형식의 정규식에 대한 예제 항목을 참조하십시오.',
+        'It was not possible to check the PGP signature, this may be caused by a missing public key or an unsupported algorithm.' =>
+            '',
         'Italian' => '이탈리아 사람',
         'Italian stop words for fulltext index. These words will be removed from the search index.' =>
             '전체 텍스트 색인에 대한 이탈리아어 중지 단어. 이 단어는 검색 색인에서 제거됩니다.',
@@ -7686,7 +7712,7 @@ Thanks for your help!
             '티켓 확대보기의 고객 정보 테이블의 최대 크기 (문자 수)',
         'Medium' => '중간의',
         'Merge this ticket and all articles into another ticket' => '이 티켓과 모든 기사를 다른 티켓으로 병합하십시오.',
-        'Merged Ticket (%s/%s) to (%s/%s).' => '합쳐진 티켓 (%s/ %s) ~ (%s/ 1 % s).',
+        'Merged Ticket (%s/%s) to (%s/%s).' => '합쳐진 티켓 (%s/%s) ~ (%s/ 1 %s).',
         'Merged Ticket <OTRS_TICKET> to <OTRS_MERGE_TO_TICKET>.' => 'Merged Ticket 1 to 2.',
         'Minute' => '분',
         'Miscellaneous' => '기타',
@@ -7756,6 +7782,8 @@ Thanks for your help!
             '다음 가능한 티켓 상태는 에이전트 인터페이스의 티켓 인바운드 인바운드 화면에 전화 메모를 추가한 후의 상태입니다.',
         'Next possible ticket states after adding a phone note in the ticket phone outbound screen of the agent interface.' =>
             '가능한 다음 티켓 상태는 상담원 인터페이스의 티켓 전화 아웃 바운드 화면에 전화 메모를 추가한 후의 상태입니다.',
+        'No public key found.' => '',
+        'No valid OpenPGP data found.' => '',
         'None' => '없음',
         'Norwegian' => '노르웨이인',
         'Notification Settings' => '알림 설정',
@@ -7909,8 +7937,8 @@ Thanks for your help!
         'ProcessID' => 'ProcessID',
         'Processes & Automation' => '프로세스 및 자동화',
         'Product News' => '제품 뉴스',
-        'Protection against CSRF (Cross Site Request Forgery) exploits (for more info see http://en.wikipedia.org/wiki/Cross-site_request_forgery).' =>
-            'CSRF (Cross Site Request Forgery) 공격에 대한 보호 (자세한 내용은 http://en.wikipedia.org/wiki/Cross-site_request_forgery 참조)',
+        'Protection against CSRF (Cross Site Request Forgery) exploits (for more info see https://en.wikipedia.org/wiki/Cross-site_request_forgery).' =>
+            '',
         'Provides a matrix overview of the tickets per state per queue' =>
             '큐당 상태 별 티켓 개요를 제공합니다.',
         'Provides customer users access to tickets even if the tickets are not assigned to a customer user of the same customer ID(s), based on permission groups.' =>
@@ -8463,6 +8491,7 @@ Thanks for your help!
             '사용 가능한 경우 긴 형식 (일, 시간, 분)으로 시간을 표시합니다. 또는 짧은 형식 (일, 시간)으로 설정할 수 있습니다.',
         'Shows time use complete description (days, hours, minutes), if enabled; or just first letter (d, h, m), if not enabled.' =>
             '사용 가능한 경우 시간 사용 완료 설명 (일, 시간, 분)을 표시합니다. 또는 활성화되지 않은 경우 첫 번째 문자 (d, h, m).',
+        'Signature data.' => '',
         'Signatures' => '서명',
         'Simple' => '단순한',
         'Skin' => '피부',
@@ -8567,6 +8596,13 @@ Thanks for your help!
         'Templates ↔ Queues' => '템플릿 ↔ 대기열',
         'Textarea' => '텍스트 영역',
         'Thai' => '태국 사람',
+        'The PGP signature is expired.' => '',
+        'The PGP signature was made by a revoked key, this could mean that the signature is forged.' =>
+            '',
+        'The PGP signature was made by an expired key.' => '',
+        'The PGP signature with the keyid has not been verified successfully.' =>
+            '',
+        'The PGP signature with the keyid is good.' => '',
         'The agent skin\'s InternalName which should be used in the agent interface. Please check the available skins in Frontend::Agent::Skins.' =>
             '에이전트 인터페이스에서 사용해야하는 에이전트 스킨의 InternalName입니다. Frontend :: Agent :: Skins에서 사용 가능한 스킨을 확인하십시오.',
         'The customer skin\'s InternalName which should be used in the customer interface. Please check the available skins in Frontend::Customer::Skins.' =>
@@ -8626,6 +8662,7 @@ Thanks for your help!
         'This is the default orange - black skin for the customer interface.' =>
             '이것은 고객 인터페이스의 기본 오렌지색 검정색 스킨입니다.',
         'This is the default orange - black skin.' => '이것은 기본 오랜지색 검은색 피부입니다.',
+        'This key is not certified with a trusted signature!' => '',
         'This module and its PreRun() function will be executed, if defined, for every request. This module is useful to check some user options or to display news about new applications.' =>
             '이 모듈과 PreRun () 함수는 모든 요청에 ​​대해 정의 된 경우 실행됩니다. 이 모듈은 일부 사용자 옵션을 확인하거나 새 응용 프로그램에 대한 뉴스를 표시하는 데 유용합니다.',
         'This module is part of the admin area of OTRS.' => '이 모듈은 OTRS의 관리 영역의 일부입니다.',
@@ -8798,6 +8835,7 @@ Thanks for your help!
         '%s KB',
         '%s MB',
         '%s TB',
+        '+%s more',
         'A key with this name (\'%s\') already exists.',
         'A package upgrade was recently finished. Click here to see the results.',
         'A popup of this screen is already open. Do you want to close it and load this one instead?',
@@ -9026,6 +9064,7 @@ Thanks for your help!
         'Remove selection',
         'Remove the Transition from this Process',
         'Remove the filter',
+        'Remove this dynamic field',
         'Remove this entry',
         'Repeat',
         'Request Details',
@@ -9109,6 +9148,7 @@ Thanks for your help!
         'This element has children elements and can currently not be removed.',
         'This event is already attached to the job, Please use a different one.',
         'This feature is part of the %s. Please contact us at %s for an upgrade.',
+        'This field can have no more than 250 characters.',
         'This field is required.',
         'This is %s',
         'This is a repeating appointment',

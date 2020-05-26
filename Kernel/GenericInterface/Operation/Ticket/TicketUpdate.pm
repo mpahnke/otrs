@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -1243,21 +1243,13 @@ sub _CheckAttachment {
     }
 
     # check attachment item internally
-    for my $Needed (qw(Content ContentType)) {
-        if ( !$Attachment->{$Needed} ) {
+    for my $Needed (qw(Content ContentType Filename)) {
+        if ( !IsStringWithData( $Attachment->{$Needed} ) ) {
             return {
                 ErrorCode    => 'TicketUpdate.MissingParameter',
                 ErrorMessage => "TicketUpdate: Attachment->$Needed parameter is missing!",
             };
         }
-    }
-
-    # Check Filename separately because it can be '0'. See bug#14761.
-    if ( !IsStringWithData( $Attachment->{Filename} ) ) {
-        return {
-            ErrorCode    => 'TicketCreate.MissingParameter',
-            ErrorMessage => "TicketCreate: Attachment->Filename  parameter is missing!",
-        };
     }
 
     # check Article->ContentType

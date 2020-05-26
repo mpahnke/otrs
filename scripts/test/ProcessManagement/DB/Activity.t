@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -998,7 +998,7 @@ my $List = $ActivityObject->ActivityList(
 
 # create the list of activities with details manually
 my $ExpectedActivityList;
-for my $ActivityID ( sort { $a <=> $b } keys %{$List} ) {
+for my $ActivityID ( sort { int $a <=> int $b } keys %{$List} ) {
 
     my $ActivityData = $ActivityObject->ActivityGet(
         ID     => $ActivityID,

@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -68,6 +68,10 @@ $Selenium->RunTest(
         $Selenium->find_element( "#SQL", 'css' )->clear();
         $Selenium->find_element( "#SQL", 'css' )->send_keys("SELECT * FROM");
         $Selenium->find_element( "#Run", 'css' )->VerifiedClick();
+
+        $Selenium->WaitFor(
+            ElementExists => "//textarea[contains(\@class,'ServerError')]"
+        );
 
         $Self->Is(
             $Selenium->execute_script(

@@ -1,5 +1,5 @@
 // --
-// Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+// Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (GPL). If you
@@ -263,7 +263,9 @@ Core.UI.RichTextEditor = (function (TargetNS) {
             // Needed for clientside validation of RTE
             CKEDITOR.instances[EditorID].on('blur', function () {
                 CKEDITOR.instances[EditorID].updateElement();
-                Core.Form.Validate.ValidateElement($EditorArea);
+                if (!$EditorArea.hasClass('Error')) {
+                    Core.Form.Validate.ValidateElement($EditorArea);
+                }
             });
 
             // needed for client-side validation

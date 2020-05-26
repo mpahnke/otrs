@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # Copyright (C) 2003 Gilberto Cezar de Almeida <gibalmeida at hotmail.com>
 # Copyright (C) 2005 Alterado por Glaucia C. Messina (glauglauu@yahoo.com)
 # Copyright (C) 2007-2010 Fabricio Luiz Machado <soprobr gmail.com>
@@ -29,7 +29,7 @@ sub Data {
     $Self->{DateFormatShort}     = '%D/%M/%Y';
     $Self->{DateInputFormat}     = '%D/%M/%Y';
     $Self->{DateInputFormatLong} = '%D/%M/%Y - %T';
-    $Self->{Completeness}        = 0.939976194524741;
+    $Self->{Completeness}        = 0.938367761598375;
 
     # csv separator
     $Self->{Separator}         = ';';
@@ -679,6 +679,8 @@ sub Data {
         'Owner' => 'Proprietário',
         'Responsible' => 'Responsável',
         'Ticket lock' => 'Bloqueio de Chamado',
+        'Dynamic fields' => 'Campos dinâmicos',
+        'Add dynamic field' => '',
         'Create times' => 'Horários de criação',
         'No create time settings.' => 'Sem configurações de horário de criação',
         'Ticket created' => 'Chamado criado',
@@ -692,6 +694,10 @@ sub Data {
         'No change time settings.' => 'Sem configurações de horários de alteração.',
         'Ticket changed' => 'Chamado alterado',
         'Ticket changed between' => 'Chamado alterado entre',
+        'Last close times' => '',
+        'No last close time settings.' => '',
+        'Ticket last close' => '',
+        'Ticket last close between' => '',
         'Close times' => 'Horários de fechamento',
         'No close time settings.' => 'Ignorar horários de fechamento',
         'Ticket closed' => 'Chamado fechado',
@@ -729,7 +735,6 @@ sub Data {
         'New customer ID' => 'Novo ID de Cliente',
         'New title' => 'Novo Título',
         'New type' => 'Novo Tipo',
-        'New Dynamic Field Values' => 'Novos Valores de Campo Dinâmico',
         'Archive selected tickets' => 'Arquivar chamados selecionados',
         'Add Note' => 'Adicionar Nota',
         'Visible for customer' => 'Visível para o Cliente',
@@ -2163,6 +2168,14 @@ sub Data {
         'Do you really want to delete this template?' => 'Você quer realmente excluir este modelo?',
         'A standard template with this name already exists!' => 'Um modelo padrão com este nome já existe!',
         'Template' => 'Modelo',
+        'To get the first 20 characters of the subject of the current/latest agent article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types.' =>
+            '',
+        'To get the first 5 lines of the body of the current/latest agent article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types.' =>
+            '',
+        'To get the first 20 characters of the subject of the current/latest article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types.' =>
+            '',
+        'To get the first 5 lines of the body of the current/latest article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types.' =>
+            '',
         'Create type templates only supports this smart tags' => 'Criar modelos de tipo apenas suporta estas etiquetas inteligentes',
         'Example template' => 'Modelo exemplo',
         'The current ticket state is' => 'O estado atual do chamado é',
@@ -2482,7 +2495,7 @@ sub Data {
         'Split' => 'Dividir',
 
         # Template: AgentStatisticsAdd
-        'Statistics Management' => '',
+        'Statistics Management' => 'Gestão de Estatísticas',
         'Add Statistics' => 'Adicionar estatísticas',
         'Read more about statistics in OTRS' => 'Leia mais sobre estatísticas no OTRS',
         'Dynamic Matrix' => 'Matriz Dinâmica ',
@@ -2758,7 +2771,6 @@ sub Data {
         'Outgoing message' => 'Mensagem de Saída',
         'Internal message' => 'Mensagem Interna',
         'Sending of this message has failed.' => 'O envio desta mensagem falhou.',
-        'This message has been queued for sending.' => 'Esta mensagem foi adicionada à fila de envio.',
         'Resize' => 'Redimensionar',
         'Mark this article as read' => 'Marcar este artigo como lido',
         'Show Full Text' => 'Mostrar Texto completo',
@@ -2819,7 +2831,7 @@ sub Data {
         # Template: CustomerAccept
         'Dear Customer,' => 'Caro Cliente,',
         'thank you for using our services.' => 'obrigado por utilizar nossos serviços.',
-        'Yes, I accepted your license.' => '',
+        'Yes, I accept your license.' => 'Sim, eu aceito a sua licença.',
 
         # Template: TicketCustomerIDSelection
         'The customer ID is not changeable, no other customer ID can be assigned to this ticket.' =>
@@ -2879,7 +2891,7 @@ sub Data {
         # Template: CustomerNavigationBar
         'Incoming Chat Requests' => 'Recebendo requisições de bate-papo',
         'Edit personal preferences' => 'Editar preferências pessoais',
-        'Logout %s' => '',
+        'Logout %s' => 'Fechar sessão %s',
 
         # Template: CustomerTicketMessage
         'Service level agreement' => 'Acordo de nível de serviço',
@@ -2930,7 +2942,6 @@ sub Data {
         # Template: DashboardEventsTicketCalendar
         'Event Information' => 'Informação do Evento',
         'Ticket fields' => 'Campos de chamado',
-        'Dynamic fields' => 'Campos dinâmicos',
 
         # Template: Error
         'Really a bug? 5 out of 10 bug reports result from a wrong or incomplete installation of OTRS.' =>
@@ -2972,14 +2983,14 @@ sub Data {
         'General Specifications and Mail Settings' => 'Especificações Gerais e Configurações de E-mail',
         'Finish' => 'Finalizar',
         'Welcome to %s' => 'Bem-vindo a %s',
-        'Germany' => '',
+        'Germany' => 'Alemanha',
         'Phone' => 'Telefone',
-        'United States' => '',
-        'Mexico' => '',
-        'Hungary' => '',
-        'Brazil' => '',
-        'Singapore' => '',
-        'Hong Kong' => '',
+        'United States' => 'Estados Unidos',
+        'Mexico' => 'México',
+        'Hungary' => 'Hungria',
+        'Brazil' => 'Brasil',
+        'Singapore' => 'Singapura',
+        'Hong Kong' => 'Hong Kong',
         'Web site' => 'Website',
 
         # Template: InstallerConfigureMail
@@ -3214,7 +3225,7 @@ sub Data {
         'This setting is currently being overridden in %s and can\'t thus be changed here!' =>
             'Esta definição está sendo sobrescrita em %s e, por isso, não pode ser alterada aqui!',
         'Changing this setting is only available in a higher config level!' =>
-            '',
+            'A alteração dessa configuração está disponível somente em um nível de configuração mais elevado!',
         '%s (%s) is currently working on this setting.' => '%s (%s) está atuando nesta definição no momento.',
         'Toggle advanced options for this setting' => 'Alternar opções avançadas para esta definição',
         'Disable this setting, so it is no longer effective' => 'Desative esta definição para que ela deixa de ser efetiva',
@@ -3326,6 +3337,7 @@ sub Data {
 
         # JS Template: DialogDeployment
         'Deployment comment...' => 'Comentário de implantação...',
+        'This field can have no more than 250 characters.' => 'Este campo não pode ter mais de 250 caracteres.',
         'Deploying, please wait...' => 'Implantando, favor esperar...',
         'Preparing to deploy, please wait...' => 'Preparando para implantar, favor esperar...',
         'Deploy now' => 'Implantar agora',
@@ -3505,9 +3517,9 @@ sub Data {
         # Perl Module: Kernel/Modules/AdminDynamicField.pm
         'Fields configuration is not valid' => 'Configuração do campo não é válida.',
         'Objects configuration is not valid' => 'Configuração dos objetos não são válidas',
-        'Database (%s)' => '',
-        'Web service (%s)' => '',
-        'Contact with data (%s)' => '',
+        'Database (%s)' => 'Base de dados (%s)',
+        'Web service (%s)' => 'Web service (%s)',
+        'Contact with data (%s)' => 'Contato com dados (%s)',
         'Could not reset Dynamic Field order properly, please check the error log for more details.' =>
             'Não foi possível resetar corretamente a ordem do campo Dinâmico, verifique o log de erros para obter mais detalhes.',
 
@@ -3680,7 +3692,7 @@ sub Data {
         'Web service "%s" created!' => 'Web service "%s" criado!',
         'Need Name!' => 'Necessário Nome!',
         'Need ExampleWebService!' => 'Necessário ExampleWebService!',
-        'Could not load %s.' => '',
+        'Could not load %s.' => 'Não foi possível carregar %s.',
         'Could not read %s!' => 'Não pôde ser lido %s!',
         'Need a file to import!' => 'Necessário um arquivo para importar!',
         'The imported file has not valid YAML content! Please check OTRS log for details' =>
@@ -3718,8 +3730,8 @@ sub Data {
         'Customer user of the ticket' => 'Usuário cliente do ticket',
         'All recipients of the first article' => 'Todos os destinatários do primeiro artigo',
         'All recipients of the last article' => 'Todos os destinatários do último artigo',
-        'Invisible to customer' => '',
-        'Visible to customer' => '',
+        'Invisible to customer' => 'Não visível para o cliente',
+        'Visible to customer' => 'Visível para o cliente',
 
         # Perl Module: Kernel/Modules/AdminOTRSBusiness.pm
         'Your system was successfully upgraded to %s.' => 'Seu sistema foi atualizado com sucesso para %s.',
@@ -4129,6 +4141,8 @@ sub Data {
         'The following tickets were locked: %s.' => 'Os Tickets a seguir foram bloqueados: %s',
 
         # Perl Module: Kernel/Modules/AgentTicketCompose.pm
+        'Article subject will be empty if the subject contains only the ticket hook!' =>
+            '',
         'Address %s replaced with registered customer address.' => 'Endereço %s substituído pelo endereço cadastrado do cliente.',
         'Customer user automatically added in Cc.' => 'Cliente automaticamente adicionado no Cc.',
 
@@ -4370,6 +4384,8 @@ sub Data {
         # Perl Module: Kernel/Modules/CustomerTicketMessage.pm
         'Check SysConfig setting for %s::QueueDefault.' => 'Valide configuração no SysConfig para %s::QueueDefault.',
         'Check SysConfig setting for %s::TicketTypeDefault.' => 'Valide configuração no SysConfig para %s::TicketTypeDefault.',
+        'You don\'t have sufficient permissions for ticket creation in default queue.' =>
+            '',
 
         # Perl Module: Kernel/Modules/CustomerTicketOverview.pm
         'Need CustomerID!' => 'ID do Cliente é necessário.',
@@ -4577,7 +4593,7 @@ sub Data {
 
         # Perl Module: Kernel/Output/HTML/Layout.pm
         'Standard' => 'Padrão',
-        'The following tickets are not updated: %s.' => '',
+        'The following tickets are not updated: %s.' => 'Os tickets a seguir não foram atualizados: %s.',
         'h' => 'h',
         'm' => 'm',
         'd' => 'd',
@@ -4978,6 +4994,8 @@ sub Data {
         'Client Connection Charset' => 'Charset do Cliente de Conexão',
         'Setting character_set_client needs to be utf8.' => 'Parâmetro character_set_client deve ser utf8.',
         'Server Database Charset' => 'Charset do Banco de dados',
+        'This character set is not yet supported, please see https://bugs.otrs.org/show_bug.cgi?id=12361. Please convert your database to the character set \'utf8\'.' =>
+            '',
         'The setting character_set_database needs to be \'utf8\'.' => 'A definição character_set_database precisa ser \'utf8\'.',
         'Table Charset' => 'Chartset da Tabela',
         'There were tables found which do not have \'utf8\' as charset.' =>
@@ -5356,7 +5374,7 @@ sub Data {
             'Nova conta criada. Enviadas informações de login para %s. Por favor, verifique seu e-mail.',
 
         # Perl Module: Kernel/System/Web/InterfaceInstaller.pm
-        'Action "%s" not found!' => '',
+        'Action "%s" not found!' => 'Ação "%s" não encontrada!',
 
         # Database XML Definition: scripts/database/otrs-initial_insert.xml
         'invalid-temporarily' => 'inválido-temporariamente',
@@ -5499,6 +5517,7 @@ sub Data {
         'Deleting the field and its data. This may take a while...' => 'Delindo o campo e seus dados.  Isto pode levar um tempo…',
 
         # JS File: Core.Agent.Admin.GenericAgent
+        'Remove this dynamic field' => '',
         'Remove selection' => 'Remover tradução',
         'Do you really want to delete this generic agent job?' => '',
         'Delete this Event Trigger' => 'Excluir este disparador de evento',
@@ -6183,6 +6202,8 @@ Obrigado pela ajuda!
         'Checks for queued outgoing emails to be sent.' => 'Verifica e-mails enfileirados para envio a serem enviados.',
         'Checks if an E-Mail is a followup to an existing ticket by searching the subject for a valid ticket number.' =>
             'Verifica se o e-mail é uma continuação de um ticket existente ao pesquisar no assunto por um número de ticket válido.',
+        'Checks if an email is a follow-up to an existing ticket with external ticket number which can be found by ExternalTicketNumberRecognition filter module.' =>
+            '',
         'Checks the SystemID in ticket number detection for follow-ups. If not enabled, SystemID will be changed after using the system.' =>
             'Verifica o ID do Sistema na detecção de número de tickets para respostas. Se não ativado, o ID do sistema será alterado após utlização do sistema.',
         'Checks the availability of OTRS Business Solution™ for this system.' =>
@@ -6380,10 +6401,10 @@ Obrigado pela ajuda!
         'Define the start day of the week for the date picker for the indicated calendar.' =>
             'Define o dia de início da semana no selecionador de dias do calendário indicado.',
         'Define the start day of the week for the date picker.' => 'Define o dia de início da semana para o selecionador de data.',
-        'Define which avatar default image should be used for the article view if no gravatar is assigned to the mail address. Check http://gravatar.com/site/implement/images/ for further information.' =>
-            'Definir qual imagem de avatar padrão deve ser utilizada para a visão de artigo se nenhum gravatar estiver associado ao endereço de e-mail. Verifique http://gravatar.com/site/implement/images/ para mais informações.',
-        'Define which avatar default image should be used for the current agent if no gravatar is assigned to the mail address of the agent. Check http://gravatar.com/site/implement/images/ for further information.' =>
-            'Definir qual imagem de avatar padrão deve ser utilizada para a visão de artigo se nenhum gravatar estiver associado ao endereço de e-mail do agente. Verifique http://gravatar.com/site/implement/images/ para mais informações.',
+        'Define which avatar default image should be used for the article view if no gravatar is assigned to the mail address. Check https://gravatar.com/site/implement/images/ for further information.' =>
+            '',
+        'Define which avatar default image should be used for the current agent if no gravatar is assigned to the mail address of the agent. Check https://gravatar.com/site/implement/images/ for further information.' =>
+            '',
         'Define which avatar engine should be used for the agent avatar on the header and the sender images in AgentTicketZoom. If \'None\' is selected, initials will be displayed instead. Please note that selecting anything other than \'None\' will transfer the encrypted email address of the particular user to an external service.' =>
             'Definir qual engine de avatar deve ser utilizada para o avatar de agente no cabeçalho e as imagens de remetente em AgentTicketZoom. Se \'Nenhum\' for selecionado, iniciais serão exibidas no lugar. Favor observar que selecionar algo diferente de \'Nenhum\' irá transferir o endereço de e-mail criptografado do usuário para um serviço externo.',
         'Define which columns are shown in the linked appointment widget (LinkObject::ViewMode = "complex"). Possible settings: 0 = Disabled, 1 = Available, 2 = Enabled by default.' =>
@@ -7062,7 +7083,8 @@ Obrigado pela ajuda!
             '',
         'Defines the users avatar. Please note: setting \'Active\' to 0 will only prevent agents from editing settings of this group in their personal preferences, but will still allow administrators to edit the settings of another user\'s behalf. Use \'PreferenceGroup\' to control in which area these settings should be shown in the user interface.' =>
             'Define o avatar do usuário. Favor observar: definindo \'Active\' como 0 só irá prevenir agentes de editar definições deste grupo em suas preferências pessoais, mas ainda irá permitir que administradores editem definições em nome de outros usuários. Utilize \'PreferenceGroup\' para controlar em quais áreas estas definições deveriam ser exibidas na interface de usuário.',
-        'Defines the valid state types for a ticket.' => 'Define os tipos de estado válidos para um ticket.',
+        'Defines the valid state types for a ticket. If a ticket is in a state which have any state type from this setting, this ticket will be considered as open, otherwise as closed.' =>
+            '',
         'Defines the valid states for unlocked tickets. To unlock tickets the script "bin/otrs.Console.pl Maint::Ticket::UnlockTimeout" can be used.' =>
             'Define os estados válidos para tickets desbloqueados. Para desbloquear tickets, o script "bin/otrs.Console.pl Maint::Ticket::UnlockTimeout" pode ser utilizado.',
         'Defines the viewable locks of a ticket. NOTE: When you change this setting, make sure to delete the cache in order to use the new value. Default: unlock, tmp_lock.' =>
@@ -7137,6 +7159,7 @@ Obrigado pela ajuda!
             'Desativa o cabeçalho HTTP "Content-Security-Policy" para permitir o carregamento de conteúdos de scripts externos. Desativar este cabeçalho HTTP pode ser um problema de segurança! So desative se você souber o que está fazendo.',
         'Disable HTTP header "X-Frame-Options: SAMEORIGIN" to allow OTRS to be included as an IFrame in other websites. Disabling this HTTP header can be a security issue! Only disable it, if you know what you are doing!' =>
             'Desativa o cabeçalho HTTP "X-Frame-Options: SAMEORIGIN" para que o OTRS seja incluído como um IFrame em outras páginas web. Desativar este cabeçalho HTTP pode ser um problema de segurança! Só desative se você souber o que está fazendo.',
+        'Disable autocomplete in the login screen.' => '',
         'Disable cloud services' => 'Desabilitar serviços de nuvem',
         'Disables sending reminder notifications to the responsible agent of a ticket (Ticket::Responsible needs to be enabled).' =>
             'Desativa o envio automático de notificações de lembrete para o agente responsável por um ticket (Ticket::Responsible precisa estar ativado).',
@@ -7406,6 +7429,7 @@ Obrigado pela ajuda!
             'Permite que usuários possam sobrescrever o caracter de separação de arquivos CSV, definidos nos arquivos de tradução. Observação: definindo \'Active\' como 0 só irá prevenir que agentes editem definições deste grupo nas preferências pessoais, mas administradores ainda poderão editar estas definições em nome de outros usuários. Utilize \'PreferenceGroup\' para controlar em qual área estas dedinições devem ser exibidas na interface de usuário.',
         'Global Search Module.' => '',
         'Go to dashboard!' => 'Vá para o Painel de Controle',
+        'Good PGP signature.' => '',
         'Google Authenticator' => 'Autenticador Google',
         'Graph: Bar Chart' => 'Gráfico de Barras',
         'Graph: Line Chart' => 'Gráfico de Linhas',
@@ -7560,6 +7584,8 @@ Obrigado pela ajuda!
         'It is possible to configure different skins, for example to distinguish between diferent customers, to be used on a per-domain basis within the application. Using a regular expression (regex), you can configure a Key/Content pair to match a domain. The value in "Key" should match the domain, and the value in "Content" should be a valid skin on your system. Please see the example entries for the proper form of the regex.' =>
             '',
         'It is possible to configure different themes, for example to distinguish between agents and customers, to be used on a per-domain basis within the application. Using a regular expression (regex), you can configure a Key/Content pair to match a domain. The value in "Key" should match the domain, and the value in "Content" should be a valid theme on your system. Please see the example entries for the proper form of the regex.' =>
+            '',
+        'It was not possible to check the PGP signature, this may be caused by a missing public key or an unsupported algorithm.' =>
             '',
         'Italian' => 'Italiano',
         'Italian stop words for fulltext index. These words will be removed from the search index.' =>
@@ -7761,6 +7787,8 @@ Obrigado pela ajuda!
             'Próximos estados de ticket possíveis após adicionar uma nota de telefonema na tela de telefonema recebido da interface de agente.',
         'Next possible ticket states after adding a phone note in the ticket phone outbound screen of the agent interface.' =>
             'Próximos estados de ticket possíveis após adicionar uma nota de telefonema na tela de ticket de telefonema realizado da interface de agente.',
+        'No public key found.' => '',
+        'No valid OpenPGP data found.' => '',
         'None' => 'Nenhum',
         'Norwegian' => 'Norueguês',
         'Notification Settings' => 'Configurações de notificação',
@@ -7914,8 +7942,8 @@ Obrigado pela ajuda!
         'ProcessID' => 'ID de Processo',
         'Processes & Automation' => 'Processos e Automação',
         'Product News' => 'Notícias do Produto',
-        'Protection against CSRF (Cross Site Request Forgery) exploits (for more info see http://en.wikipedia.org/wiki/Cross-site_request_forgery).' =>
-            'Proteção contra exploração CSRF (Cross Site Request Forgery) (para mais informação veja http://en.wikipedia.org/wiki/Cross-site_request_forgery).',
+        'Protection against CSRF (Cross Site Request Forgery) exploits (for more info see https://en.wikipedia.org/wiki/Cross-site_request_forgery).' =>
+            '',
         'Provides a matrix overview of the tickets per state per queue' =>
             'Gera uma visão geral em matriz dos tickets por estado e por fila.',
         'Provides customer users access to tickets even if the tickets are not assigned to a customer user of the same customer ID(s), based on permission groups.' =>
@@ -8468,6 +8496,7 @@ Obrigado pela ajuda!
             'Mostra tempo em formato longo (dias, horas, minutos), se ativado; ou em formato curto (dias, horas), se desativado.',
         'Shows time use complete description (days, hours, minutes), if enabled; or just first letter (d, h, m), if not enabled.' =>
             'Horários exibidos utilizam descrição completa (dias, horas, minutos), se ativado; ou apenas a primeira letra (d, h, m), se inativado.',
+        'Signature data.' => '',
         'Signatures' => 'Assinaturas',
         'Simple' => 'Simples',
         'Skin' => 'Tema',
@@ -8572,6 +8601,13 @@ Obrigado pela ajuda!
         'Templates ↔ Queues' => 'Modelos ↔ Filas',
         'Textarea' => 'Área de texto',
         'Thai' => 'Thailandês',
+        'The PGP signature is expired.' => '',
+        'The PGP signature was made by a revoked key, this could mean that the signature is forged.' =>
+            '',
+        'The PGP signature was made by an expired key.' => '',
+        'The PGP signature with the keyid has not been verified successfully.' =>
+            '',
+        'The PGP signature with the keyid is good.' => '',
         'The agent skin\'s InternalName which should be used in the agent interface. Please check the available skins in Frontend::Agent::Skins.' =>
             'O Nome Interno do skin de agente que deve ser utilizado na interface de agente. Por favor verificar os skins disponíveis em Frontend::Agent::Skins.',
         'The customer skin\'s InternalName which should be used in the customer interface. Please check the available skins in Frontend::Customer::Skins.' =>
@@ -8631,6 +8667,7 @@ Obrigado pela ajuda!
         'This is the default orange - black skin for the customer interface.' =>
             '',
         'This is the default orange - black skin.' => '',
+        'This key is not certified with a trusted signature!' => '',
         'This module and its PreRun() function will be executed, if defined, for every request. This module is useful to check some user options or to display news about new applications.' =>
             '',
         'This module is part of the admin area of OTRS.' => 'Este modulo é parte da área administrativa do OTRS.',
@@ -8803,6 +8840,7 @@ Obrigado pela ajuda!
         '%s KB',
         '%s MB',
         '%s TB',
+        '+%s more',
         'A key with this name (\'%s\') already exists.',
         'A package upgrade was recently finished. Click here to see the results.',
         'A popup of this screen is already open. Do you want to close it and load this one instead?',
@@ -9031,6 +9069,7 @@ Obrigado pela ajuda!
         'Remove selection',
         'Remove the Transition from this Process',
         'Remove the filter',
+        'Remove this dynamic field',
         'Remove this entry',
         'Repeat',
         'Request Details',
@@ -9114,6 +9153,7 @@ Obrigado pela ajuda!
         'This element has children elements and can currently not be removed.',
         'This event is already attached to the job, Please use a different one.',
         'This feature is part of the %s. Please contact us at %s for an upgrade.',
+        'This field can have no more than 250 characters.',
         'This field is required.',
         'This is %s',
         'This is a repeating appointment',

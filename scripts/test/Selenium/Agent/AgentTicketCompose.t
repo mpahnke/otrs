@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -408,6 +408,13 @@ $Selenium->RunTest(
 
         $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#ToCustomer").length;' );
 
+        my $Message = 'Article subject will be empty if the subject contains only the ticket hook!';
+
+        $Self->True(
+            $Selenium->execute_script("return \$('.MessageBox.Notice:contains(\"$Message\")').length;"),
+            "Notification about empty subject is found",
+        );
+
         # Check duplication of customer user who doesn't exist in the system (see bug#13784).
         $Selenium->find_element( "#ToCustomer", 'css' )->send_keys( 'Test', "\N{U+E007}" );
         $Selenium->WaitFor( JavaScript => 'return $("#RemoveCustomerTicket_2").length;' );
@@ -421,6 +428,10 @@ $Selenium->RunTest(
             $Selenium->execute_script('return $(".Dialog.Modal.Alert").length;'),
             1,
             "Alert dialog is found.",
+        );
+
+        $Selenium->WaitForjQueryEventBound(
+            CSSSelector => '#DialogButton1',
         );
 
         $Selenium->execute_script("\$('#DialogButton1').click();");
@@ -679,6 +690,36 @@ $Selenium->RunTest(
             $UserID,
             "After undo - Ticket owner is still test user $UserID"
         ) || die;
+
+        # Create article in OTRS channel.
+        my $InternalArticleBackendObject
+            = $Kernel::OM->Get('Kernel::System::Ticket::Article')->BackendForChannel( ChannelName => 'Internal' );
+        $ArticleID = $InternalArticleBackendObject->ArticleCreate(
+            TicketID             => $TicketID,
+            SenderType           => 'agent',
+            IsVisibleForCustomer => 1,
+            From                 => 'Test Agent <email@example.com>',
+            To                   => 'Customer A <customer-a@example.com>',
+            Cc                   => 'Customert B <customer-b@example.com>',
+            Subject              => 'Test Subject',
+            Body                 => 'Test Body',
+            Charset              => 'ISO-8859-15',
+            MimeType             => 'text/plain',
+            HistoryType          => 'AddNote',
+            HistoryComment       => 'Some free text!',
+            UserID               => 1,
+        );
+        $Self->True(
+            $ArticleID,
+            "Article is created - ID $ArticleID",
+        );
+
+        # Refresh screen and verify there is a reply button for internal type article. See bug#14958 for more details.
+        $Selenium->VerifiedRefresh();
+        $Self->True(
+            $Selenium->execute_script("return \$('#ResponseID$ArticleID').length;"),
+            "Reply for internal article typo found."
+        );
 
         # Delete test ticket.
         $Success = $TicketObject->TicketDelete(

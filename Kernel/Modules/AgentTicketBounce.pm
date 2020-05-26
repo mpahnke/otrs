@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -334,10 +334,16 @@ $Param{Signature}";
         $LayoutObject->ChallengeTokenCheck();
 
         # get params
-        for my $Parameter (qw(From BounceTo To Subject Body InformSender BounceStateID)) {
+        for my $Parameter (qw(BounceTo To Subject Body InformSender BounceStateID)) {
             $Param{$Parameter} = $Kernel::OM->Get('Kernel::System::Web::Request')->GetParam( Param => $Parameter )
                 || '';
         }
+
+        # Make sure sender is correct one.
+        $Param{From} = $Kernel::OM->Get('Kernel::System::TemplateGenerator')->Sender(
+            QueueID => $Ticket{QueueID},
+            UserID  => $Self->{UserID},
+        );
 
         my %Error;
 

@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -102,6 +102,9 @@ sub Import {
     }
 
     my $UntilLimitedTimestamp = $Param{UntilLimit} || '';
+
+    # Prevent line ending type errors (see bug#14791).
+    $Param{ICal} =~ s/\r/\n/g;
 
     if ( !$UntilLimitedTimestamp ) {
 

@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -41,7 +41,7 @@ sub new {
     my $ParamObject = $Kernel::OM->Get('Kernel::System::Web::Request');
 
     for (
-        qw(From To Cc Bcc Subject Body InReplyTo References ComposeStateID IsVisibleForCustomerPresent
+        qw(To Cc Bcc Subject Body InReplyTo References ComposeStateID IsVisibleForCustomerPresent
         IsVisibleForCustomer ArticleID TimeUnits Year Month Day Hour Minute FormID FormDraftID Title)
         )
     {
@@ -74,6 +74,17 @@ sub Run {
 
     # get ticket object
     my $TicketObject = $Kernel::OM->Get('Kernel::System::Ticket');
+
+    # get ticket data
+    my %Ticket = $TicketObject->TicketGet(
+        TicketID      => $Self->{TicketID},
+        DynamicFields => 1,
+    );
+
+    $Self->{GetParam}->{From} = $Kernel::OM->Get('Kernel::System::TemplateGenerator')->Sender(
+        QueueID => $Ticket{QueueID},
+        UserID  => $Self->{UserID},
+    );
 
     my $ACL = $TicketObject->TicketAcl(
         Data          => \%PossibleActions,
@@ -1055,8 +1066,15 @@ sub SendEmail {
         }
     }
 
-    # Make sure we don't save form if a draft was loaded.
+    # Make sure sender is correct one. See bug#14872 ( https://bugs.otrs.org/show_bug.cgi?id=14872 ).
+    $GetParam{From} = $Kernel::OM->Get('Kernel::System::TemplateGenerator')->Sender(
+        QueueID => $Ticket{QueueID},
+        UserID  => $Self->{UserID},
+    );
+
     if ( $Self->{LoadedFormDraftID} ) {
+
+        # Make sure we don't save form if a draft was loaded.
         %Error = ( LoadedFormDraft => 1 );
     }
 
@@ -1254,13 +1272,20 @@ sub SendEmail {
         ChannelName => 'Email',
     );
 
+    # Get attributes like sender address.
+    my %Data = $Kernel::OM->Get('Kernel::System::TemplateGenerator')->Attributes(
+        TicketID => $Self->{TicketID},
+        Data     => {},
+        UserID   => $Self->{UserID},
+    );
+
     my $ArticleID = $EmailArticleBackendObject->ArticleSend(
         TicketID             => $Self->{TicketID},
         SenderType           => 'agent',
         IsVisibleForCustomer => $IsVisibleForCustomer,
         HistoryType          => 'Forward',
         HistoryComment       => "\%\%$To",
-        From                 => $GetParam{From},
+        From                 => $Data{From},
         To                   => $GetParam{To},
         Cc                   => $GetParam{Cc},
         Bcc                  => $GetParam{Bcc},
@@ -2025,7 +2050,7 @@ sub _GetExtendedParams {
 
     my @MultipleCustomer;
     my $CustomersNumber = $ParamObject->GetParam( Param => 'CustomerTicketCounterToCustomer' ) || 0;
-    my $Selected = $ParamObject->GetParam( Param => 'CustomerSelected' ) || '';
+    my $Selected        = $ParamObject->GetParam( Param => 'CustomerSelected' )                || '';
 
     # get check item object
     my $CheckItemObject = $Kernel::OM->Get('Kernel::System::CheckItem');

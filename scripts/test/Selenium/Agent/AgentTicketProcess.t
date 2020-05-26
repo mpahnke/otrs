@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -635,6 +635,9 @@ $Selenium->RunTest(
             Element => '#ProcessEntityID',
             Value   => $ListReverse{$ProcessName},
         );
+
+        # Wait until form has loaded, if necessary.
+        $Selenium->WaitFor( JavaScript => 'return typeof($) === "function" && $("#Subject").length;' );
 
         $Selenium->find_element( "#Subject",              'css' )->send_keys($SubjectRandom);
         $Selenium->find_element( "#RichText",             'css' )->send_keys($ContentRandom);

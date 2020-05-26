@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -152,6 +152,53 @@ $Self->Is(
     scalar @Appointments,
     171,
     'Appointment count',
+);
+
+# this will be ok
+my %CalendarCR = $CalendarObject->CalendarCreate(
+    CalendarName => 'CR Test calendar',
+    Color        => '#DDDDDD',
+    GroupID      => $GroupID,
+    UserID       => $UserID,
+);
+
+$Self->True(
+    $CalendarCR{CalendarID},
+    "CalendarCreate( CalendarName => 'CR Test calendar', Color => '#DDDDDD', GroupID => $GroupID, UserID => $UserID ) - CalendarID",
+);
+
+# read sample .ics file
+my $ContentCR = $Kernel::OM->Get('Kernel::System::Main')->FileRead(
+    Directory => $Kernel::OM->Get('Kernel::Config')->{Home} . '/scripts/test/sample/Calendar/',
+    Filename  => 'SampleCalendarCR.ics',
+);
+
+$Self->True(
+    ${$ContentCR},
+    '.ics string with CR line endings loaded',
+);
+
+my $ImportSuccessCR = $Kernel::OM->Get('Kernel::System::Calendar::Import::ICal')->Import(
+    CalendarID => $CalendarCR{CalendarID},
+    ICal       => ${$ContentCR},
+    UserID     => $UserID,
+    UntilLimit => '2018-01-01 00:00:00',
+);
+
+$Self->True(
+    $ImportSuccessCR,
+    'Import success',
+);
+
+my @AppointmentsCR = $AppointmentObject->AppointmentList(
+    CalendarID => $CalendarCR{CalendarID},
+    Result     => 'HASH',
+);
+
+$Self->Is(
+    scalar @AppointmentsCR,
+    171,
+    'CR Appointment count',
 );
 
 my @Result = (

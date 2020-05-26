@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -134,14 +134,14 @@ $Selenium->RunTest(
                 'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete;'
         );
         $Selenium->WaitFor(
-            JavaScript =>
-                "return typeof(\$) === 'function' && \$('#DeleteButton').length;"
+            ElementExists =>
+                "//span[contains(.,'Delete web service')]"
         );
 
         sleep 1;
 
         # Delete web service.
-        $Selenium->find_element( "#DeleteButton", 'css' )->click();
+        $Selenium->find_element("//span[contains(.,'Delete web service')]")->click();
 
         $Selenium->WaitFor(
             JavaScript =>
@@ -152,13 +152,13 @@ $Selenium->RunTest(
         # Wait until delete dialog has closed and action performed.
         $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && !\$('#DialogButton2').length;" );
         $Selenium->WaitFor(
-            JavaScript =>
-                'return typeof(Core) == "object" && typeof(Core.App) == "object" && Core.App.PageLoadComplete;'
+            ElementExists =>
+                "//p[contains(.,\'Web service \"$Name\" deleted!\')]",
         );
 
         # Verify that web service is deleted.
         $Self->True(
-            index( $Selenium->get_page_source(), "Web service \"$Name\" deleted!" ) > -1,
+            $Selenium->find_element("//p[contains(.,\'Web service \"$Name\" deleted!\')]"),
             "$Name is deleted",
         );
 

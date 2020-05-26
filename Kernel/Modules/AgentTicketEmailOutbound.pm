@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -779,6 +779,11 @@ sub Form {
         BodyClass => 'Popup',
     );
 
+    # Inform a user that article subject will be empty if contains only the ticket hook (if nothing is modified).
+    $Output .= $LayoutObject->Notify(
+        Data => Translatable('Article subject will be empty if the subject contains only the ticket hook!'),
+    );
+
     $Output .= $Self->_Mask(
         TicketNumber => $Ticket{TicketNumber},
         TicketID     => $Self->{TicketID},
@@ -1189,8 +1194,15 @@ sub SendEmail {
         }
     }
 
-    # Make sure we don't save form if a draft was loaded.
+    # Make sure sender is correct one. See bug#14872 ( https://bugs.otrs.org/show_bug.cgi?id=14872 ).
+    $GetParam{From} = $Kernel::OM->Get('Kernel::System::TemplateGenerator')->Sender(
+        QueueID => $Ticket{QueueID},
+        UserID  => $Self->{UserID},
+    );
+
     if ( $Self->{LoadedFormDraftID} ) {
+
+        # Make sure we don't save form if a draft was loaded.
         %Error = ( LoadedFormDraft => 1 );
     }
 
@@ -1272,6 +1284,17 @@ sub SendEmail {
             Type      => 'Small',
             BodyClass => 'Popup',
         );
+
+        # When a draft is loaded, inform a user that article subject will be empty
+        # if contains only the ticket hook (if nothing is modified).
+        if ( $Error{LoadedFormDraft} ) {
+            $Output .= $LayoutObject->Notify(
+                Data => $LayoutObject->{LanguageObject}->Translate(
+                    'Article subject will be empty if the subject contains only the ticket hook!'
+                ),
+            );
+        }
+
         $Output .= $Self->_Mask(
             TicketNumber => $Ticket{TicketNumber},
             Title        => $Ticket{Title},
@@ -1359,6 +1382,13 @@ sub SendEmail {
         $To .= $GetParam{$Key};
     }
 
+    # Get attributes like sender address.
+    my %Data = $Kernel::OM->Get('Kernel::System::TemplateGenerator')->Attributes(
+        TicketID => $Self->{TicketID},
+        Data     => {},
+        UserID   => $Self->{UserID},
+    );
+
     my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
     my $ArticleID     = $ArticleObject->BackendForChannel( ChannelName => 'Email' )->ArticleSend(
         SenderType           => 'agent',
@@ -1366,7 +1396,7 @@ sub SendEmail {
         TicketID             => $Self->{TicketID},
         HistoryType          => 'EmailAgent',
         HistoryComment       => "\%\%$To",
-        From                 => $GetParam{From},
+        From                 => $Data{From},
         To                   => $GetParam{To},
         Cc                   => $GetParam{Cc},
         Bcc                  => $GetParam{Bcc},
@@ -1502,6 +1532,14 @@ sub AjaxUpdate {
     my @MultipleCustomer    = @{ $GetParamExtended{MultipleCustomer} };
     my @MultipleCustomerCc  = @{ $GetParamExtended{MultipleCustomerCc} };
     my @MultipleCustomerBcc = @{ $GetParamExtended{MultipleCustomerBcc} };
+
+    my %Ticket = $Kernel::OM->Get('Kernel::System::Ticket')->TicketGet( TicketID => $Self->{TicketID} );
+
+    # Make sure sender is correct one. See bug#14872 ( https://bugs.otrs.org/show_bug.cgi?id=14872 ).
+    $GetParam{From} = $Kernel::OM->Get('Kernel::System::TemplateGenerator')->Sender(
+        QueueID => $Ticket{QueueID},
+        UserID  => $Self->{UserID},
+    );
 
     my @ExtendedData;
 
@@ -2158,7 +2196,7 @@ sub _GetExtendedParams {
     # get params
     my %GetParam;
     for my $Key (
-        qw(From To Cc Bcc Subject Body ComposeStateID IsVisibleForCustomer IsVisibleForCustomerPresent
+        qw(To Cc Bcc Subject Body ComposeStateID IsVisibleForCustomer IsVisibleForCustomerPresent
         ArticleID TimeUnits Year Month Day Hour Minute FormID FormDraftID Title)
         )
     {
@@ -2179,7 +2217,7 @@ sub _GetExtendedParams {
     my %AddressesList;
     my @MultipleCustomer;
     my $CustomersNumber = $ParamObject->GetParam( Param => 'CustomerTicketCounterToCustomer' ) || 0;
-    my $Selected = $ParamObject->GetParam( Param => 'CustomerSelected' ) || '';
+    my $Selected        = $ParamObject->GetParam( Param => 'CustomerSelected' )                || '';
 
     # get check item object
     my $CheckItemObject = $Kernel::OM->Get('Kernel::System::CheckItem');

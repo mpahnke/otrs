@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -405,8 +405,8 @@ for my $Test (@Tests) {
         Result  => 'ARRAY',
     );
 
-    @ReturnedTicketIDs = sort { $a <=> $b } @ReturnedTicketIDs;
-    @{ $Test->{Result} } = sort { $a <=> $b } @{ $Test->{Result} };
+    @ReturnedTicketIDs = sort { int $a <=> int $b } @ReturnedTicketIDs;
+    @{ $Test->{Result} } = sort { int $a <=> int $b } @{ $Test->{Result} };
 
     $Self->IsDeeply(
         \@ReturnedTicketIDs,

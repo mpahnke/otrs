@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -102,8 +102,8 @@ sub PIDCreate {
 
         $Kernel::OM->Get('Kernel::System::Log')->Log(
             Priority => 'notice',
-            Message  => "Removed PID ($ProcessID{Name}/$ProcessID{Host}/$ProcessID{PID}, "
-                . "because 1 hour old!",
+            Message =>
+                "Removed PID ($ProcessID{Name}/$ProcessID{Host}/$ProcessID{PID}, because the TTL ($TTL sec) was exceeded!",
         );
     }
 

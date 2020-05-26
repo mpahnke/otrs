@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -474,6 +474,35 @@ $Self->False(
 $Self->True(
     scalar keys %CustomerCompanyList,
     "CustomerCompanyList() with Search - Valid 0 param",
+);
+
+# Test bug#14861 (https://bugs.otrs.org/show_bug.cgi?id=14861).
+# Remove CustomerCompanyValid from config map.
+delete $Data->{CustomerCompanyValid};
+
+$ConfigObject->Set(
+    Key   => 'CustomerCompany',
+    Value => \%{$Data},
+);
+
+# Destroy and recreate customer company object.
+$Kernel::OM->ObjectsDiscard( Objects => ['Kernel::System::CustomerCompany'] );
+$CustomerCompanyObject = $Kernel::OM->Get('Kernel::System::CustomerCompany');
+
+# Clean cache.
+$Kernel::OM->Get('Kernel::System::Cache')->CleanUp(
+    Type => 'CustomerCompany_CustomerCompanyList',
+);
+
+# Search for valid customer company, with CustomerCompanyValid disabled mapping.
+# Expecting to find results even if they are invalid.
+%CustomerCompanyList = $CustomerCompanyObject->CustomerCompanyList(
+    Search => $CompanyInvalid,
+    Valid  => 1,
+);
+$Self->True(
+    scalar keys %CustomerCompanyList,
+    "CustomerCompanyList() with Search - Valid 1 param and disabled CustomerCompanyValid in config",
 );
 
 # cleanup is done by RestoreDatabase

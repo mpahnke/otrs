@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -191,7 +191,7 @@ sub Run {
     my %GetParam;
     for (
         qw(
-        From To Cc Bcc Subject Body InReplyTo References ResponseID ReplyArticleID StateID ArticleID
+        To Cc Bcc Subject Body InReplyTo References ResponseID ReplyArticleID StateID ArticleID
         IsVisibleForCustomerPresent IsVisibleForCustomer TimeUnits Year Month Day Hour Minute FormID ReplyAll
         FormDraftID Title
         )
@@ -200,12 +200,18 @@ sub Run {
         $GetParam{$_} = $ParamObject->GetParam( Param => $_ );
     }
 
+    # Make sure sender is correct one. See bug#14872 ( https://bugs.otrs.org/show_bug.cgi?id=14872 ).
+    $GetParam{From} = $Kernel::OM->Get('Kernel::System::TemplateGenerator')->Sender(
+        QueueID => $Ticket{QueueID},
+        UserID  => $Self->{UserID},
+    );
+
     # hash for check duplicated entries
     my %AddressesList;
 
     my @MultipleCustomer;
     my $CustomersNumber = $ParamObject->GetParam( Param => 'CustomerTicketCounterToCustomer' ) || 0;
-    my $Selected = $ParamObject->GetParam( Param => 'CustomerSelected' ) || '';
+    my $Selected        = $ParamObject->GetParam( Param => 'CustomerSelected' )                || '';
 
     # get check item object
     my $CheckItemObject = $Kernel::OM->Get('Kernel::System::CheckItem');
@@ -868,8 +874,9 @@ sub Run {
                 );
         }
 
-        # Make sure we don't save form if a draft was loaded.
         if ( $Self->{LoadedFormDraftID} ) {
+
+            # Make sure we don't save form if a draft was loaded.
             %Error = ( LoadedFormDraft => 1 );
         }
 
@@ -881,6 +888,17 @@ sub Run {
                 Type      => 'Small',
                 BodyClass => 'Popup',
             );
+
+            # When a draft is loaded, inform a user that article subject will be empty
+            # if contains only the ticket hook (if nothing is modified).
+            if ( $Error{LoadedFormDraft} ) {
+                $Output .= $LayoutObject->Notify(
+                    Data => $LayoutObject->{LanguageObject}->Translate(
+                        'Article subject will be empty if the subject contains only the ticket hook!'
+                    ),
+                );
+            }
+
             $GetParam{StandardResponse} = $GetParam{Body};
             $Output .= $Self->_Mask(
                 TicketID   => $Self->{TicketID},
@@ -982,6 +1000,13 @@ sub Run {
             $IsVisibleForCustomer = $GetParam{IsVisibleForCustomer} ? 1 : 0;
         }
 
+        # Get attributes like sender address
+        my %Data = $Kernel::OM->Get('Kernel::System::TemplateGenerator')->Attributes(
+            TicketID => $Self->{TicketID},
+            Data     => {},
+            UserID   => $Self->{UserID},
+        );
+
         # send email
         my $ArticleID = $ArticleBackendObject->ArticleSend(
             IsVisibleForCustomer => $IsVisibleForCustomer,
@@ -989,7 +1014,7 @@ sub Run {
             TicketID             => $Self->{TicketID},
             HistoryType          => 'SendAnswer',
             HistoryComment       => "\%\%$Recipients",
-            From                 => $GetParam{From},
+            From                 => $Data{From},
             To                   => $GetParam{To},
             Cc                   => $GetParam{Cc},
             Bcc                  => $GetParam{Bcc},
@@ -1274,6 +1299,13 @@ sub Run {
             Value     => $Ticket{TicketNumber},
             Type      => 'Small',
             BodyClass => 'Popup',
+        );
+
+        # Inform a user that article subject will be empty if contains only the ticket hook (if nothing is modified).
+        $Output .= $LayoutObject->Notify(
+            Data => $LayoutObject->{LanguageObject}->Translate(
+                'Article subject will be empty if the subject contains only the ticket hook!'
+            ),
         );
 
         # get std attachment object

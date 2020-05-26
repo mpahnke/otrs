@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2019-09-19 02:44+0000\n"
+"POT-Creation-Date: 2020-04-08 06:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2027,6 +2027,14 @@ msgid "Ticket lock"
 msgstr ""
 
 #. Template: AdminGenericAgent
+msgid "Dynamic fields"
+msgstr ""
+
+#. Template: AdminGenericAgent
+msgid "Add dynamic field"
+msgstr ""
+
+#. Template: AdminGenericAgent
 msgid "Create times"
 msgstr ""
 
@@ -2076,6 +2084,22 @@ msgstr ""
 
 #. Template: AdminGenericAgent
 msgid "Ticket changed between"
+msgstr ""
+
+#. Template: AdminGenericAgent
+msgid "Last close times"
+msgstr ""
+
+#. Template: AdminGenericAgent
+msgid "No last close time settings."
+msgstr ""
+
+#. Template: AdminGenericAgent
+msgid "Ticket last close"
+msgstr ""
+
+#. Template: AdminGenericAgent
+msgid "Ticket last close between"
 msgstr ""
 
 #. Template: AdminGenericAgent
@@ -2224,10 +2248,6 @@ msgstr ""
 
 #. Template: AdminGenericAgent
 msgid "New type"
-msgstr ""
-
-#. Template: AdminGenericAgent
-msgid "New Dynamic Field Values"
 msgstr ""
 
 #. Template: AdminGenericAgent
@@ -6419,6 +6439,22 @@ msgid "Template"
 msgstr ""
 
 #. Template: AdminTemplate
+msgid "To get the first 20 characters of the subject of the current/latest agent article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types."
+msgstr ""
+
+#. Template: AdminTemplate
+msgid "To get the first 5 lines of the body of the current/latest agent article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types."
+msgstr ""
+
+#. Template: AdminTemplate
+msgid "To get the first 20 characters of the subject of the current/latest article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types."
+msgstr ""
+
+#. Template: AdminTemplate
+msgid "To get the first 5 lines of the body of the current/latest article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types."
+msgstr ""
+
+#. Template: AdminTemplate
 msgid "Create type templates only supports this smart tags"
 msgstr ""
 
@@ -8151,10 +8187,6 @@ msgid "Sending of this message has failed."
 msgstr ""
 
 #. Template: AgentTicketZoom
-msgid "This message has been queued for sending."
-msgstr ""
-
-#. Template: AgentTicketZoom
 msgid "Resize"
 msgstr ""
 
@@ -8299,7 +8331,7 @@ msgid "thank you for using our services."
 msgstr ""
 
 #. Template: CustomerAccept
-msgid "Yes, I accepted your license."
+msgid "Yes, I accept your license."
 msgstr ""
 
 #. Template: TicketCustomerIDSelection
@@ -8600,10 +8632,6 @@ msgstr ""
 
 #. Template: DashboardEventsTicketCalendar
 msgid "Ticket fields"
-msgstr ""
-
-#. Template: DashboardEventsTicketCalendar
-msgid "Dynamic fields"
 msgstr ""
 
 #. Template: Error
@@ -9612,6 +9640,10 @@ msgstr ""
 
 #. JS Template: DialogDeployment
 msgid "Deployment comment..."
+msgstr ""
+
+#. JS Template: DialogDeployment
+msgid "This field can have no more than 250 characters."
 msgstr ""
 
 #. JS Template: DialogDeployment
@@ -11935,6 +11967,10 @@ msgid "The following tickets were locked: %s."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/AgentTicketCompose.pm
+msgid "Article subject will be empty if the subject contains only the ticket hook!"
+msgstr ""
+
+#. Perl Module: Kernel/Modules/AgentTicketCompose.pm
 msgid "Address %s replaced with registered customer address."
 msgstr ""
 
@@ -12600,6 +12636,10 @@ msgstr ""
 
 #. Perl Module: Kernel/Modules/CustomerTicketMessage.pm
 msgid "Check SysConfig setting for %s::TicketTypeDefault."
+msgstr ""
+
+#. Perl Module: Kernel/Modules/CustomerTicketMessage.pm
+msgid "You don't have sufficient permissions for ticket creation in default queue."
 msgstr ""
 
 #. Perl Module: Kernel/Modules/CustomerTicketOverview.pm
@@ -14035,6 +14075,10 @@ msgid "Server Database Charset"
 msgstr ""
 
 #. Perl Module: Kernel/System/SupportDataCollector/Plugin/Database/mysql/Charset.pm
+msgid "This character set is not yet supported, please see https://bugs.otrs.org/show_bug.cgi?id=12361. Please convert your database to the character set 'utf8'."
+msgstr ""
+
+#. Perl Module: Kernel/System/SupportDataCollector/Plugin/Database/mysql/Charset.pm
 msgid "The setting character_set_database needs to be 'utf8'."
 msgstr ""
 
@@ -15272,6 +15316,10 @@ msgstr ""
 
 #. JS File: Core.Agent.Admin.DynamicField
 msgid "Deleting the field and its data. This may take a while..."
+msgstr ""
+
+#. JS File: Core.Agent.Admin.GenericAgent
+msgid "Remove this dynamic field"
 msgstr ""
 
 #. JS File: Core.Agent.Admin.GenericAgent
@@ -16942,6 +16990,10 @@ msgid "Checks if an E-Mail is a followup to an existing ticket by searching the 
 msgstr ""
 
 #. SysConfig
+msgid "Checks if an email is a follow-up to an existing ticket with external ticket number which can be found by ExternalTicketNumberRecognition filter module."
+msgstr ""
+
+#. SysConfig
 msgid "Checks the SystemID in ticket number detection for follow-ups. If not enabled, SystemID will be changed after using the system."
 msgstr ""
 
@@ -17550,11 +17602,11 @@ msgid "Define the start day of the week for the date picker."
 msgstr ""
 
 #. SysConfig
-msgid "Define which avatar default image should be used for the article view if no gravatar is assigned to the mail address. Check http://gravatar.com/site/implement/images/ for further information."
+msgid "Define which avatar default image should be used for the article view if no gravatar is assigned to the mail address. Check https://gravatar.com/site/implement/images/ for further information."
 msgstr ""
 
 #. SysConfig
-msgid "Define which avatar default image should be used for the current agent if no gravatar is assigned to the mail address of the agent. Check http://gravatar.com/site/implement/images/ for further information."
+msgid "Define which avatar default image should be used for the current agent if no gravatar is assigned to the mail address of the agent. Check https://gravatar.com/site/implement/images/ for further information."
 msgstr ""
 
 #. SysConfig
@@ -19026,7 +19078,7 @@ msgid "Defines the users avatar. Please note: setting 'Active' to 0 will only pr
 msgstr ""
 
 #. SysConfig
-msgid "Defines the valid state types for a ticket."
+msgid "Defines the valid state types for a ticket. If a ticket is in a state which have any state type from this setting, this ticket will be considered as open, otherwise as closed."
 msgstr ""
 
 #. SysConfig
@@ -19195,6 +19247,10 @@ msgstr ""
 
 #. SysConfig
 msgid "Disable HTTP header \"X-Frame-Options: SAMEORIGIN\" to allow OTRS to be included as an IFrame in other websites. Disabling this HTTP header can be a security issue! Only disable it, if you know what you are doing!"
+msgstr ""
+
+#. SysConfig
+msgid "Disable autocomplete in the login screen."
 msgstr ""
 
 #. SysConfig
@@ -19926,6 +19982,10 @@ msgid "Go to dashboard!"
 msgstr ""
 
 #. SysConfig
+msgid "Good PGP signature."
+msgstr ""
+
+#. SysConfig
 msgid "Google Authenticator"
 msgstr ""
 
@@ -20279,6 +20339,10 @@ msgstr ""
 
 #. SysConfig
 msgid "It is possible to configure different themes, for example to distinguish between agents and customers, to be used on a per-domain basis within the application. Using a regular expression (regex), you can configure a Key/Content pair to match a domain. The value in \"Key\" should match the domain, and the value in \"Content\" should be a valid theme on your system. Please see the example entries for the proper form of the regex."
+msgstr ""
+
+#. SysConfig
+msgid "It was not possible to check the PGP signature, this may be caused by a missing public key or an unsupported algorithm."
 msgstr ""
 
 #. SysConfig
@@ -20894,6 +20958,14 @@ msgid "Next possible ticket states after adding a phone note in the ticket phone
 msgstr ""
 
 #. SysConfig
+msgid "No public key found."
+msgstr ""
+
+#. SysConfig
+msgid "No valid OpenPGP data found."
+msgstr ""
+
+#. SysConfig
 msgid "None"
 msgstr ""
 
@@ -21334,7 +21406,7 @@ msgid "Product News"
 msgstr ""
 
 #. SysConfig
-msgid "Protection against CSRF (Cross Site Request Forgery) exploits (for more info see http://en.wikipedia.org/wiki/Cross-site_request_forgery)."
+msgid "Protection against CSRF (Cross Site Request Forgery) exploits (for more info see https://en.wikipedia.org/wiki/Cross-site_request_forgery)."
 msgstr ""
 
 #. SysConfig
@@ -22614,6 +22686,10 @@ msgid "Shows time use complete description (days, hours, minutes), if enabled; o
 msgstr ""
 
 #. SysConfig
+msgid "Signature data."
+msgstr ""
+
+#. SysConfig
 msgid "Signatures"
 msgstr ""
 
@@ -22910,6 +22986,26 @@ msgid "Thai"
 msgstr ""
 
 #. SysConfig
+msgid "The PGP signature is expired."
+msgstr ""
+
+#. SysConfig
+msgid "The PGP signature was made by a revoked key, this could mean that the signature is forged."
+msgstr ""
+
+#. SysConfig
+msgid "The PGP signature was made by an expired key."
+msgstr ""
+
+#. SysConfig
+msgid "The PGP signature with the keyid has not been verified successfully."
+msgstr ""
+
+#. SysConfig
+msgid "The PGP signature with the keyid is good."
+msgstr ""
+
+#. SysConfig
 msgid "The agent skin's InternalName which should be used in the agent interface. Please check the available skins in Frontend::Agent::Skins."
 msgstr ""
 
@@ -23039,6 +23135,10 @@ msgstr ""
 
 #. SysConfig
 msgid "This is the default orange - black skin."
+msgstr ""
+
+#. SysConfig
+msgid "This key is not certified with a trusted signature!"
 msgstr ""
 
 #. SysConfig

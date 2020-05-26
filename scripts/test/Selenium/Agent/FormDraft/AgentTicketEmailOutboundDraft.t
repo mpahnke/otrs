@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -249,6 +249,13 @@ $Selenium->RunTest(
                 'return typeof($) === "function" && $("#submitRichText").length;'
         );
 
+        my $Message = 'Article subject will be empty if the subject contains only the ticket hook!';
+
+        $Self->True(
+            $Selenium->execute_script("return \$('.MessageBox.Notice:contains(\"$Message\")').length;"),
+            "Notification about empty subject is found",
+        );
+
         # Try to create FormDraft with same name, expecting error.
         $Selenium->VerifiedRefresh();
         $Selenium->execute_script("\$('#FormDraftSave').click();");
@@ -432,7 +439,7 @@ $Selenium->RunTest(
                     ),
                     2,
                     "Uploaded file correctly"
-                );
+                ) || die;
             }
         }
 

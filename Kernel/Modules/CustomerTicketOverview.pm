@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -111,9 +111,10 @@ sub Run {
 
     my $UserObject = $Kernel::OM->Get('Kernel::System::CustomerUser');
 
+    my @CustomerIDs;
+
     # Add filter for customer company if the company tickets are not disabled.
     if ( !$DisableCompanyTickets ) {
-        my @CustomerIDs;
         my %AccessibleCustomers = $Kernel::OM->Get('Kernel::System::CustomerGroup')->GroupContextCustomers(
             CustomerUserID => $Self->{UserID},
         );
@@ -122,6 +123,11 @@ sub Run {
         if ( $Self->{Subaction} eq 'CompanyTickets' && scalar keys %AccessibleCustomers > 1 ) {
 
             @CustomerIDs = $ParamObject->GetArray( Param => 'CustomerIDs' );
+
+            # Prevent array item duplication.
+            my %CustomerIDsHash = map { $_ => 1 } @CustomerIDs;
+            @CustomerIDs = sort keys %CustomerIDsHash;
+
             $Param{CustomerIDStrg} = $LayoutObject->BuildSelection(
                 Data       => \%AccessibleCustomers,
                 Name       => 'CustomerIDs',
@@ -293,6 +299,14 @@ sub Run {
             . ';Filter=' . $LayoutObject->Ascii2Html( Text => $FilterCurrent )
             . ';Subaction=' . $LayoutObject->Ascii2Html( Text => $Self->{Subaction} )
             . ';';
+
+        # Add CustomerIDs parameter if needed.
+        if ( IsArrayRefWithData( \@CustomerIDs ) ) {
+            for my $CustomerID (@CustomerIDs) {
+                $Link .= "CustomerIDs=$CustomerID;";
+            }
+        }
+
         my %PageNav = $LayoutObject->PageNavBar(
             Limit     => 10000,
             StartHit  => $StartHit,
@@ -406,7 +420,10 @@ sub Run {
                 $LayoutObject->Block(
                     Name => 'FilterFooterItem',
                     Data => {
+                        %Param,
+                        %PageNav,
                         %{ $NavBarFilter{$Key} },
+
                     },
                 );
             }

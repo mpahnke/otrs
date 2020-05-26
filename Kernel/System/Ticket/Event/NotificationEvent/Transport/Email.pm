@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -118,9 +118,6 @@ sub SendNotification {
     );
 
     return if $IsLocalAddress;
-
-    # create new array to prevent attachment growth (see bug#5114)
-    my @Attachments = @{ $Param{Attachments} };
 
     my %Notification = %{ $Param{Notification} };
 

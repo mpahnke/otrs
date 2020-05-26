@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -564,7 +564,7 @@ $Self->Is(
 );
 
 my $Counter = 0;
-for my $ACLID ( sort { $a <=> $b } keys %{$TestACLList} ) {
+for my $ACLID ( sort { int $a <=> int $b } keys %{$TestACLList} ) {
     $Self->Is(
         $ACLID,
         $AddedACLList[$Counter],
@@ -683,7 +683,7 @@ my $List = $ACLObject->ACLList(
 
 # create the list of ACLs with details manually
 my $ExpectedACLList;
-for my $ACLID ( sort { $a <=> $b } keys %{$List} ) {
+for my $ACLID ( sort { int $a <=> int $b } keys %{$List} ) {
 
     my $ACLData = $ACLObject->ACLGet(
         ID     => $ACLID,

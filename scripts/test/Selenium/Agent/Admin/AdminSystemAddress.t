@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -135,6 +135,10 @@ $Selenium->RunTest(
         );
         $Selenium->find_element( "#Comment", 'css' )->send_keys($SysAddComment);
         $Selenium->find_element( "#Submit",  'css' )->VerifiedClick();
+
+        $Selenium->WaitFor(
+            ElementExists => " //a[contains(.,'$SysAddRandom')]"
+        );
 
         # Check for created test SystemAddress.
         $Self->True(

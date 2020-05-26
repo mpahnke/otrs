@@ -1,5 +1,5 @@
 // --
-// Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+// Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (GPL). If you
@@ -136,6 +136,7 @@ Core.Agent.Admin = Core.Agent.Admin || {};
 
             Core.UI.Dialog.ShowContentDialog($DialogObj, Core.Language.Translate('Deploy'), '100px', 'Center', true);
             Core.UI.InitWidgetActionToggle();
+            Core.Form.Validate.Init();
 
             $('.CloseDialog').off('click.CloseDeploymentDialog').on('click.CloseDeploymentDialog', function() {
                 Core.UI.Dialog.CloseDialog($('.Dialog:visible'));
@@ -151,6 +152,10 @@ Core.Agent.Admin = Core.Agent.Admin || {};
                     },
                     $DialogContentObj = $(this).closest('.Dialog').find('.InnerContent'),
                     $DialogFooterObj = $(this).closest('.Dialog').find('.ContentFooter');
+
+                if (Data.Comments.length > 250) {
+                    return false;
+                }
 
                 if ($DialogContentObj.hasClass('Deploying')) {
                     alert(Core.Language.Translate('The deployment is already running.'));

@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -63,19 +63,22 @@ $Selenium->RunTest(
             $Element->is_displayed();
         }
 
+        # Check if Signature field has validation. See bug#14881.
         # Check client side validation.
-        my $Element = $Selenium->find_element( "#Name", 'css' );
-        $Element->send_keys("");
-        $Selenium->find_element( "#Submit", 'css' )->click();
-        $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#Name.Error').length" );
+        for my $HTMLElement (qw(Name RichText)) {
+            my $Element = $Selenium->find_element( "#$HTMLElement", 'css' );
+            $Element->send_keys("");
+            $Selenium->find_element( "#Submit", 'css' )->click();
+            $Selenium->WaitFor( JavaScript => "return typeof(\$) === 'function' && \$('#$HTMLElement.Error').length" );
 
-        $Self->Is(
-            $Selenium->execute_script(
-                "return \$('#Name').hasClass('Error')"
-            ),
-            '1',
-            'Client side validation correctly detected missing input value',
-        );
+            $Self->Is(
+                $Selenium->execute_script(
+                    "return \$('#$HTMLElement').hasClass('Error')"
+                ),
+                '1',
+                "Client side validation correctly detected missing input value for Element $HTMLElement",
+            );
+        }
 
         # Check breadcrumb on Add screen.
         my $Count = 1;

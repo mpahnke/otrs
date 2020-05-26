@@ -1,5 +1,5 @@
 // --
-// Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+// Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 // --
 // This software comes with ABSOLUTELY NO WARRANTY. For details, see
 // the enclosed file COPYING for license information (GPL). If you
@@ -141,6 +141,16 @@ var Core = Core || {};
         });
 
         Core.UI.Table.InitTableFilter($("#FilterUsers"), $("#Users"));
+
+        // Define endsWith() method if a browser has no support for it, e.g. IE11 (see bug#14845).
+        if (typeof String.prototype.endsWith === 'undefined') {
+            String.prototype.endsWith = function(search, this_len) {
+                if (this_len === undefined || this_len > this.length) {
+                    this_len = this.length;
+                }
+                return this.substring(this_len - search.length, this_len) === search;
+            };
+        }
     };
 
 
@@ -468,15 +478,20 @@ var Core = Core || {};
             URL,
             Value,
             function(Response) {
+                var LinkURL = 'Action=AdminSystemConfigurationDeployment;Subaction=Deployment';
 
                 TargetNS.CleanWidgetClasses($Widget);
                 TargetNS.SettingRender(Response, $Widget);
 
                 if (Response.Data.SettingData.IsDirty) {
+                    if (Core.Config.Get('SessionUseCookie') === '0') {
+                        LinkURL += ';' + Core.Config.Get('SessionName') + '=' + Core.Config.Get('SessionID');
+                    }
+
                     Core.UI.ShowNotification(
                         Core.Language.Translate('You have undeployed settings, would you like to deploy them?'),
                         'Notice',
-                        'Action=AdminSystemConfigurationDeployment;Subaction=Deployment',
+                        LinkURL,
                         function() {
                             Core.UI.InitStickyElement();
                         }
@@ -1054,6 +1069,7 @@ var Core = Core || {};
             Core.Config.Get('Baselink'),
             Data,
             function(Response) {
+                var LinkURL = 'Action=AdminSystemConfigurationDeployment;Subaction=Deployment';
 
                 TargetNS.SettingRender(Response, $Widget);
                 TargetNS.CleanWidgetClasses($Widget);
@@ -1077,10 +1093,13 @@ var Core = Core || {};
                         );
                     }
                     else {
+                        if (Core.Config.Get('SessionUseCookie') === '0') {
+                            LinkURL += ';' + Core.Config.Get('SessionName') + '=' + Core.Config.Get('SessionID');
+                        }
                         Core.UI.ShowNotification(
                             Core.Language.Translate('You have undeployed settings, would you like to deploy them?'),
                             'Notice',
-                            'Action=AdminSystemConfigurationDeployment;Subaction=Deployment',
+                            LinkURL,
                             function() {
                                 Core.UI.InitStickyElement();
                             }

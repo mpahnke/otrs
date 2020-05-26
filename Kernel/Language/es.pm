@@ -29,7 +29,7 @@ sub Data {
     $Self->{DateFormatShort}     = '%D/%M/%Y';
     $Self->{DateInputFormat}     = '%D/%M/%Y';
     $Self->{DateInputFormatLong} = '%D/%M/%Y - %T';
-    $Self->{Completeness}        = 0.673184832511478;
+    $Self->{Completeness}        = 0.671859126312225;
 
     # csv separator
     $Self->{Separator}         = ';';
@@ -679,6 +679,8 @@ sub Data {
         'Owner' => 'Propietario',
         'Responsible' => 'Responsable',
         'Ticket lock' => 'Bloqueo de tickets',
+        'Dynamic fields' => 'Campos dinámicos',
+        'Add dynamic field' => '',
         'Create times' => 'Fechas de creación',
         'No create time settings.' => 'No hay fecha de creación',
         'Ticket created' => 'Ticket creado',
@@ -692,6 +694,10 @@ sub Data {
         'No change time settings.' => 'No hay fecha de modificación',
         'Ticket changed' => 'Ticket modificado',
         'Ticket changed between' => 'Ticket modificado entre',
+        'Last close times' => '',
+        'No last close time settings.' => '',
+        'Ticket last close' => '',
+        'Ticket last close between' => '',
         'Close times' => 'Fechas de cierre',
         'No close time settings.' => 'No hay fechas de cierre',
         'Ticket closed' => 'Ticket cerrado',
@@ -729,7 +735,6 @@ sub Data {
         'New customer ID' => 'Nuevo ID de cliente',
         'New title' => 'Nuevo título',
         'New type' => 'Nuevo tipo',
-        'New Dynamic Field Values' => 'Nuevos valores de campo dinámico',
         'Archive selected tickets' => 'Archivar los tickets seleccionados',
         'Add Note' => 'Añadir una nota',
         'Visible for customer' => 'Visible para el cliente',
@@ -1371,7 +1376,7 @@ sub Data {
         'You are about to downgrade to ((OTRS)) Community Edition and will lose the following features and all data related to these:' =>
             '',
         'Chat' => 'Chat',
-        'Report Generator' => 'Generador de Reportes',
+        'Report Generator' => 'Generador de Informes',
         'Timeline view in ticket zoom' => 'Vista LineaTiempo en ticket zoom',
         'DynamicField ContactWithData' => 'CampoDinamico ContactoConDatos',
         'DynamicField Database' => 'CampoDinamico BaseDatos',
@@ -2163,6 +2168,14 @@ sub Data {
         'Do you really want to delete this template?' => '¿Realmente desea eliminar esta plantilla?',
         'A standard template with this name already exists!' => '¡Una plantilla estándar con este nombre ya existe!',
         'Template' => 'Plantilla',
+        'To get the first 20 characters of the subject of the current/latest agent article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types.' =>
+            '',
+        'To get the first 5 lines of the body of the current/latest agent article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types.' =>
+            '',
+        'To get the first 20 characters of the subject of the current/latest article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types.' =>
+            '',
+        'To get the first 5 lines of the body of the current/latest article (current for Answer and Forward, latest for Note template type). This tag is not supported for other template types.' =>
+            '',
         'Create type templates only supports this smart tags' => 'Crear plantillas tipo sólo soporta estas etiquetas inteligentes',
         'Example template' => 'Plantilla Ejemplo',
         'The current ticket state is' => 'El estado actual del ticket es',
@@ -2442,13 +2455,13 @@ sub Data {
 
         # Template: AgentPreferences
         'Edit your preferences' => 'Editar sus preferencias',
-        'Personal Preferences' => '',
+        'Personal Preferences' => 'Preferencias pesonales',
         'Preferences' => 'Preferencias',
         'Please note: you\'re currently editing the preferences of %s.' =>
             '',
         'Go back to editing this agent' => '',
         'Set up your personal preferences. Save each setting by clicking the checkmark on the right.' =>
-            '',
+            'Configura tus preferencias personales. Guarda cada configuración haciendo clic en el botón de verificación a la derecha.',
         'You can use the navigation tree below to only show settings from certain groups.' =>
             '',
         'Dynamic Actions' => '',
@@ -2482,7 +2495,7 @@ sub Data {
         'Split' => 'Dividir',
 
         # Template: AgentStatisticsAdd
-        'Statistics Management' => '',
+        'Statistics Management' => 'Gestor de estadísticas',
         'Add Statistics' => '',
         'Read more about statistics in OTRS' => '',
         'Dynamic Matrix' => 'Matriz Dinámica',
@@ -2758,7 +2771,6 @@ sub Data {
         'Outgoing message' => 'Mensaje saliente',
         'Internal message' => 'Mensaje interno',
         'Sending of this message has failed.' => '',
-        'This message has been queued for sending.' => '',
         'Resize' => 'Redimensionar',
         'Mark this article as read' => 'Marcar este artículo como leído',
         'Show Full Text' => 'Mostrar Texto Completo',
@@ -2819,7 +2831,7 @@ sub Data {
         # Template: CustomerAccept
         'Dear Customer,' => '',
         'thank you for using our services.' => '',
-        'Yes, I accepted your license.' => '',
+        'Yes, I accept your license.' => '',
 
         # Template: TicketCustomerIDSelection
         'The customer ID is not changeable, no other customer ID can be assigned to this ticket.' =>
@@ -2930,7 +2942,6 @@ sub Data {
         # Template: DashboardEventsTicketCalendar
         'Event Information' => 'Información del evento',
         'Ticket fields' => 'Campos del ticket',
-        'Dynamic fields' => 'Campos dinámicos',
 
         # Template: Error
         'Really a bug? 5 out of 10 bug reports result from a wrong or incomplete installation of OTRS.' =>
@@ -2960,7 +2971,7 @@ sub Data {
         'View notifications' => 'Ver notificiaciones',
         'Notifications' => '',
         'Notifications (OTRS Business Solution™)' => '',
-        'Personal preferences' => '',
+        'Personal preferences' => 'Preferencias personales',
         'Logout' => 'Cerrar la sesión',
         'You are logged in as' => 'Ha iniciado sesión como',
 
@@ -3326,6 +3337,7 @@ sub Data {
 
         # JS Template: DialogDeployment
         'Deployment comment...' => '',
+        'This field can have no more than 250 characters.' => '',
         'Deploying, please wait...' => '',
         'Preparing to deploy, please wait...' => '',
         'Deploy now' => '',
@@ -3423,9 +3435,9 @@ sub Data {
         'Notifications could not be Imported due to a unknown error, please check OTRS logs for more information' =>
             'Los notificaciones no se pudieron importarse debido a un error desconocido, favor, compruebe los registros de OTRS para más información.',
         'The following Notifications have been added successfully: %s' =>
-            'Los siguientes Notificaciones se han agregado exitosamente: %s',
+            'Los siguientes Notificaciones se han agregado correctamente: %s',
         'The following Notifications have been updated successfully: %s' =>
-            'Los siguientes Notificaciones se han actualizado exitosamente:%s',
+            'Los siguientes Notificaciones se han actualizado correctamente:%s',
         'There where errors adding/updating the following Notifications: %s. Please check the log file for more information.' =>
             'Hubo errores al añadir/actualizar las siguientes Notificaciones: %s. Por favor, compruebe el archivo de registros para más información.',
         'Notification updated!' => '¡Notificación actualizada!',
@@ -3456,7 +3468,7 @@ sub Data {
         'Successful' => '',
         'Processing' => '',
         'Failed' => 'Fracasado',
-        'Invalid Filter: %s!' => '¡Filtro no válido:% s!',
+        'Invalid Filter: %s!' => '¡Filtro no válido: %s!',
         'Less than a second' => '',
         'sorted descending' => 'orden descendente',
         'sorted ascending' => 'orden ascendente',
@@ -4058,7 +4070,7 @@ sub Data {
         'You need ro permission!' => 'Necesita permiso ro !',
         'Can not delete link with %s!' => '¡No se puede borrar el enlace con %s!',
         '%s Link(s) deleted successfully.' => '',
-        'Can not create link with %s! Object already linked as %s.' => '¡No se puede crear un enlace con % s! El objeto ya esta enlazado con % s.',
+        'Can not create link with %s! Object already linked as %s.' => '¡No se puede crear un enlace con %s! El objeto ya esta enlazado con %s.',
         'Can not create link with %s!' => 'No se puede crear enlace con %s!',
         '%s links added successfully.' => '',
         'The object %s cannot link with other object!' => 'El objeto %s no puede vincularse con otro objeto!',
@@ -4114,7 +4126,7 @@ sub Data {
 
         # Perl Module: Kernel/Modules/AgentTicketBulk.pm
         'Can\'t lock Tickets, no TicketIDs are given!' => 'No se puede bloquear los Ticket, ningún TicketID está dado!',
-        'Ticket (%s) is not unlocked!' => '¡El ticket (% s) no está desbloqueado!',
+        'Ticket (%s) is not unlocked!' => '¡El ticket (%s) no está desbloqueado!',
         'The following tickets were ignored because they are locked by another agent or you don\'t have write access to tickets: %s.' =>
             '',
         'The following ticket was ignored because it is locked by another agent or you don\'t have write access to ticket: %s.' =>
@@ -4129,6 +4141,8 @@ sub Data {
         'The following tickets were locked: %s.' => 'Los siguientes tickets fueron bloqueados: %s.',
 
         # Perl Module: Kernel/Modules/AgentTicketCompose.pm
+        'Article subject will be empty if the subject contains only the ticket hook!' =>
+            '',
         'Address %s replaced with registered customer address.' => 'Dirección %s reemplaza con la del cliente registrado.',
         'Customer user automatically added in Cc.' => 'Usuario Cliente añadido automáticamente en Cc.',
 
@@ -4370,6 +4384,8 @@ sub Data {
         # Perl Module: Kernel/Modules/CustomerTicketMessage.pm
         'Check SysConfig setting for %s::QueueDefault.' => 'Revise los ajustes de la Configuración del Sistema para %s::FilaPredeterminada.',
         'Check SysConfig setting for %s::TicketTypeDefault.' => 'Revise los ajustes de la Configuración del Sistema para %s::TipodeTicketPredeterminado.',
+        'You don\'t have sufficient permissions for ticket creation in default queue.' =>
+            '',
 
         # Perl Module: Kernel/Modules/CustomerTicketOverview.pm
         'Need CustomerID!' => '¡Se necesita la ID del cliente!',
@@ -4979,6 +4995,8 @@ sub Data {
         'Client Connection Charset' => 'Juego de Caracteres de la Conexión del Cliente',
         'Setting character_set_client needs to be utf8.' => 'El ajuste character_set_client necesita ser utf8.',
         'Server Database Charset' => 'Juego de Caracteres del Servidor de Base de Datos',
+        'This character set is not yet supported, please see https://bugs.otrs.org/show_bug.cgi?id=12361. Please convert your database to the character set \'utf8\'.' =>
+            '',
         'The setting character_set_database needs to be \'utf8\'.' => '',
         'Table Charset' => 'Juego de Caracter de la Tabla',
         'There were tables found which do not have \'utf8\' as charset.' =>
@@ -5500,6 +5518,7 @@ sub Data {
         'Deleting the field and its data. This may take a while...' => 'Borrar el campo y sus datos. Esto tomará unos momentos...',
 
         # JS File: Core.Agent.Admin.GenericAgent
+        'Remove this dynamic field' => '',
         'Remove selection' => 'Eliminar selección',
         'Do you really want to delete this generic agent job?' => '',
         'Delete this Event Trigger' => 'Borrar este disparador de eventos',
@@ -6190,6 +6209,8 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
         'Checks for queued outgoing emails to be sent.' => '',
         'Checks if an E-Mail is a followup to an existing ticket by searching the subject for a valid ticket number.' =>
             'Comprueba si un E-Mail es un seguimiento a un ticket existente búscando en el tema por un número de ticket válido.',
+        'Checks if an email is a follow-up to an existing ticket with external ticket number which can be found by ExternalTicketNumberRecognition filter module.' =>
+            '',
         'Checks the SystemID in ticket number detection for follow-ups. If not enabled, SystemID will be changed after using the system.' =>
             '',
         'Checks the availability of OTRS Business Solution™ for this system.' =>
@@ -6387,9 +6408,9 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
         'Define the start day of the week for the date picker for the indicated calendar.' =>
             'Definir el día de inicio de la semana para el selector de fecha para el calendario indicado.',
         'Define the start day of the week for the date picker.' => 'Definir el día de inicio de la semana para el selector de fecha.',
-        'Define which avatar default image should be used for the article view if no gravatar is assigned to the mail address. Check http://gravatar.com/site/implement/images/ for further information.' =>
+        'Define which avatar default image should be used for the article view if no gravatar is assigned to the mail address. Check https://gravatar.com/site/implement/images/ for further information.' =>
             '',
-        'Define which avatar default image should be used for the current agent if no gravatar is assigned to the mail address of the agent. Check http://gravatar.com/site/implement/images/ for further information.' =>
+        'Define which avatar default image should be used for the current agent if no gravatar is assigned to the mail address of the agent. Check https://gravatar.com/site/implement/images/ for further information.' =>
             '',
         'Define which avatar engine should be used for the agent avatar on the header and the sender images in AgentTicketZoom. If \'None\' is selected, initials will be displayed instead. Please note that selecting anything other than \'None\' will transfer the encrypted email address of the particular user to an external service.' =>
             '',
@@ -7069,7 +7090,8 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
             '',
         'Defines the users avatar. Please note: setting \'Active\' to 0 will only prevent agents from editing settings of this group in their personal preferences, but will still allow administrators to edit the settings of another user\'s behalf. Use \'PreferenceGroup\' to control in which area these settings should be shown in the user interface.' =>
             '',
-        'Defines the valid state types for a ticket.' => '',
+        'Defines the valid state types for a ticket. If a ticket is in a state which have any state type from this setting, this ticket will be considered as open, otherwise as closed.' =>
+            '',
         'Defines the valid states for unlocked tickets. To unlock tickets the script "bin/otrs.Console.pl Maint::Ticket::UnlockTimeout" can be used.' =>
             '',
         'Defines the viewable locks of a ticket. NOTE: When you change this setting, make sure to delete the cache in order to use the new value. Default: unlock, tmp_lock.' =>
@@ -7144,6 +7166,7 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
             '',
         'Disable HTTP header "X-Frame-Options: SAMEORIGIN" to allow OTRS to be included as an IFrame in other websites. Disabling this HTTP header can be a security issue! Only disable it, if you know what you are doing!' =>
             '',
+        'Disable autocomplete in the login screen.' => '',
         'Disable cloud services' => 'Deshabilitar servicios en la nube',
         'Disables sending reminder notifications to the responsible agent of a ticket (Ticket::Responsible needs to be enabled).' =>
             '',
@@ -7413,6 +7436,7 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
             '',
         'Global Search Module.' => '',
         'Go to dashboard!' => '¡Ir al panel principal!',
+        'Good PGP signature.' => '',
         'Google Authenticator' => 'Google Authenticator',
         'Graph: Bar Chart' => 'Gráfico: Gráfico de barras',
         'Graph: Line Chart' => 'Gráfico: Gráfico de líneas',
@@ -7568,6 +7592,8 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
             '',
         'It is possible to configure different themes, for example to distinguish between agents and customers, to be used on a per-domain basis within the application. Using a regular expression (regex), you can configure a Key/Content pair to match a domain. The value in "Key" should match the domain, and the value in "Content" should be a valid theme on your system. Please see the example entries for the proper form of the regex.' =>
             '',
+        'It was not possible to check the PGP signature, this may be caused by a missing public key or an unsupported algorithm.' =>
+            '',
         'Italian' => 'Italiano',
         'Italian stop words for fulltext index. These words will be removed from the search index.' =>
             'Palabras vacías en italiano para el índice de texto completo. Estas palabras serán eliminadas del índice de búsqueda.',
@@ -7591,13 +7617,13 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
         'Link Object.' => 'Enlazar objeto.',
         'Link agents to groups.' => 'Crea enlace de Agentes a Grupos',
         'Link agents to roles.' => 'Crea enlace de Agentes a Roles',
-        'Link customer users to customers.' => '',
-        'Link customer users to groups.' => '',
-        'Link customer users to services.' => '',
-        'Link customers to groups.' => '',
-        'Link queues to auto responses.' => 'Crea enlace de Colas a Respuestas Automáticas',
+        'Link customer users to customers.' => 'Relacionar clientes con empresas',
+        'Link customer users to groups.' => 'Relacionar grupos de clientes',
+        'Link customer users to services.' => 'Relacionar clientes con servicios',
+        'Link customers to groups.' => 'Relacionar grupos de empresas',
+        'Link queues to auto responses.' => 'Relacionar Colas con Respuestas Automáticas',
         'Link roles to groups.' => 'Crea enlace de Roles a Grupos.',
-        'Link templates to attachments.' => '',
+        'Link templates to attachments.' => 'Relacionar plantillas con adjuntos',
         'Link templates to queues.' => 'Crea enlace de Plantillas a Colas.',
         'Link this ticket to other objects' => 'Enlazar este ticket a otros objetos',
         'Links 2 tickets with a "Normal" type link.' => 'Enlaza 2 tickets con un enlace tipo "Normal".',
@@ -7768,6 +7794,8 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
             'Siguiente estado posible del ticket después de agregar una nota en la pantalla de llamada telefónica entrante para la interfaz de agente.',
         'Next possible ticket states after adding a phone note in the ticket phone outbound screen of the agent interface.' =>
             'Siguiente estado posible del ticket después de agregar una nota en la pantalla de llamada telefónica saliente para la interfaz de agente.',
+        'No public key found.' => '',
+        'No valid OpenPGP data found.' => '',
         'None' => 'Ninguno',
         'Norwegian' => 'Noruego',
         'Notification Settings' => 'Preferencias de Notificaciones',
@@ -7921,7 +7949,7 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
         'ProcessID' => 'ID de Proceso',
         'Processes & Automation' => '',
         'Product News' => 'Noticias de productos',
-        'Protection against CSRF (Cross Site Request Forgery) exploits (for more info see http://en.wikipedia.org/wiki/Cross-site_request_forgery).' =>
+        'Protection against CSRF (Cross Site Request Forgery) exploits (for more info see https://en.wikipedia.org/wiki/Cross-site_request_forgery).' =>
             '',
         'Provides a matrix overview of the tickets per state per queue' =>
             '',
@@ -7930,7 +7958,7 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
         'Public Calendar' => 'Calendario Púplico',
         'Public calendar.' => 'Calendario público.',
         'Queue view' => 'Vista por colas',
-        'Queues ↔ Auto Responses' => '',
+        'Queues ↔ Auto Responses' => 'Colas ↔ Auto Respuestas',
         'Rebuild the ticket index for AgentTicketQueue.' => '',
         'Recognize if a ticket is a follow-up to an existing ticket using an external ticket number. Note: the first capturing group from the \'NumberRegExp\' expression will be used as the ticket number value.' =>
             '',
@@ -7950,7 +7978,7 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
             '',
         'Replaces the original sender with current customer\'s email address on compose answer in the ticket compose screen of the agent interface.' =>
             '',
-        'Reports' => 'Reportes',
+        'Reports' => 'Informes',
         'Reports (OTRS Business Solution™)' => 'Reportes (OTRS Business Solution™)',
         'Reprocess mails from spool directory that could not be imported in the first place.' =>
             '',
@@ -8475,6 +8503,7 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
             '',
         'Shows time use complete description (days, hours, minutes), if enabled; or just first letter (d, h, m), if not enabled.' =>
             '',
+        'Signature data.' => '',
         'Signatures' => 'Firmas',
         'Simple' => 'Simple',
         'Skin' => 'Apariencia',
@@ -8579,6 +8608,13 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
         'Templates ↔ Queues' => '',
         'Textarea' => 'Área de texto',
         'Thai' => 'Tailandés',
+        'The PGP signature is expired.' => '',
+        'The PGP signature was made by a revoked key, this could mean that the signature is forged.' =>
+            '',
+        'The PGP signature was made by an expired key.' => '',
+        'The PGP signature with the keyid has not been verified successfully.' =>
+            '',
+        'The PGP signature with the keyid is good.' => '',
         'The agent skin\'s InternalName which should be used in the agent interface. Please check the available skins in Frontend::Agent::Skins.' =>
             '',
         'The customer skin\'s InternalName which should be used in the customer interface. Please check the available skins in Frontend::Customer::Skins.' =>
@@ -8638,6 +8674,7 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
         'This is the default orange - black skin for the customer interface.' =>
             'Este es el aspecto predeterminado naranja - negro para la interfaz del cliente.',
         'This is the default orange - black skin.' => 'Este es el aspecto predeterminado naranja - negro.',
+        'This key is not certified with a trusted signature!' => '',
         'This module and its PreRun() function will be executed, if defined, for every request. This module is useful to check some user options or to display news about new applications.' =>
             '',
         'This module is part of the admin area of OTRS.' => 'Este módulo es parte del área de administración del OTRS.',
@@ -8810,6 +8847,7 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
         '%s KB',
         '%s MB',
         '%s TB',
+        '+%s more',
         'A key with this name (\'%s\') already exists.',
         'A package upgrade was recently finished. Click here to see the results.',
         'A popup of this screen is already open. Do you want to close it and load this one instead?',
@@ -9038,6 +9076,7 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
         'Remove selection',
         'Remove the Transition from this Process',
         'Remove the filter',
+        'Remove this dynamic field',
         'Remove this entry',
         'Repeat',
         'Request Details',
@@ -9121,6 +9160,7 @@ El control del acceso adicional para demostrar o no demostrar éste enlace puede
         'This element has children elements and can currently not be removed.',
         'This event is already attached to the job, Please use a different one.',
         'This feature is part of the %s. Please contact us at %s for an upgrade.',
+        'This field can have no more than 250 characters.',
         'This field is required.',
         'This is %s',
         'This is a repeating appointment',

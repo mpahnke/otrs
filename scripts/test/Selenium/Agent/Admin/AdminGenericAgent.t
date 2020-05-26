@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -308,15 +308,42 @@ $Selenium->RunTest(
         );
         $Selenium->find_element( "#NewNoteBody", 'css' )->clear();
 
+        # Insert needed dynamic fields.
+        $Selenium->execute_script(
+            "\$('#AddNewDynamicFields').val('DynamicField_$CheckboxDynamicFieldName').trigger('redraw.InputField').trigger('change');"
+        );
+        $Selenium->WaitFor(
+            JavaScript =>
+                "return \$('#SelectedNewDynamicFields #DynamicField_${CheckboxDynamicFieldName}').length;"
+        );
+        $Self->True(
+            $Selenium->execute_script(
+                "return \$('#SelectedNewDynamicFields #DynamicField_${CheckboxDynamicFieldName}').length;"
+            ),
+            "Dynamic field '$CheckboxDynamicFieldName' is added",
+        );
+
+        $Selenium->execute_script(
+            "\$('#AddNewDynamicFields').val('DynamicField_$DynamicFieldName').trigger('redraw.InputField').trigger('change');"
+        );
+        $Selenium->WaitFor(
+            JavaScript => "return \$('#SelectedNewDynamicFields #DynamicField_${DynamicFieldName}Used').length;"
+        );
+        $Self->True(
+            $Selenium->execute_script(
+                "return \$('#SelectedNewDynamicFields #DynamicField_${DynamicFieldName}Used').length;"
+            ),
+            "Dynamic field '$DynamicFieldName' is added",
+        );
+
         # set test dynamic field to date in the past, but do not activate it
         # validation used to kick in even if checkbox in front wasn't activated
         # see bug#12210 for more information
         $Selenium->find_element( "#DynamicField_${DynamicFieldName}Year", 'css' )->send_keys('2015');
 
-        $Selenium->find_element( "#DynamicField_${CheckboxDynamicFieldName}Used1", 'css' )->click();
-
         # save job
         $Selenium->find_element( "#Submit", 'css' )->VerifiedClick();
+        $Selenium->WaitFor( ElementExists => "//a[contains(.,\'$GenericAgentJob\')]" );
 
         # check if test job show on AdminGenericAgent
         $Self->True(
@@ -379,11 +406,12 @@ $Selenium->RunTest(
         # toggle Execute Ticket Commands widget
         $Selenium->execute_script('$(".WidgetSimple.Collapsed .WidgetAction.Toggle a").click();');
 
-        # check if the checkbox from dynamicfield is selected
-        $Self->Is(
-            $Selenium->find_element( "#DynamicField_${CheckboxDynamicFieldName}Used1", 'css' )->is_selected(),
-            1,
-            "$CheckboxDynamicFieldName Used1 is selected",
+        # Check if the checkbox from dynamicfield is added and not checked.
+        $Self->True(
+            $Selenium->execute_script(
+                "return \$('#SelectedNewDynamicFields #DynamicField_${CheckboxDynamicFieldName}').prop('checked') === false;"
+            ),
+            "Dynamic field '$CheckboxDynamicFieldName' is added and unchecked",
         );
 
         $Selenium->InputFieldValueSet(
@@ -391,6 +419,7 @@ $Selenium->RunTest(
             Value   => 1,
         );
         $Selenium->find_element( "#Submit", 'css' )->VerifiedClick();
+        $Selenium->WaitFor( ElementExists => "//a[contains(.,\'$GenericAgentJob\')]" );
 
         # run test job
         $Selenium->find_element("//a[contains(\@href, \'Subaction=Run;Profile=$GenericAgentJob' )]")->VerifiedClick();
@@ -472,7 +501,9 @@ $Selenium->RunTest(
             Element => '#Valid',
             Value   => 0,
         );
+
         $Selenium->find_element( "#Submit", 'css' )->VerifiedClick();
+        $Selenium->WaitFor( ElementExists => "//a[contains(.,\'$GenericAgentJob\')]" );
 
         # check class of invalid generic job in the overview table
         $Self->True(

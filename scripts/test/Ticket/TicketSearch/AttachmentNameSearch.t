@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -335,7 +335,7 @@ for my $Test (@Tests) {
             Limit => 2,
         );
 
-        @FoundTicketIDs = sort { $a <=> $b } @FoundTicketIDs;
+        @FoundTicketIDs = sort { int $a <=> int $b } @FoundTicketIDs;
         @{ $Test->{"ExpectedResults$StorageBackend"} }
             = sort { $a <=> $b } @{ $Test->{"ExpectedResults$StorageBackend"} };
 

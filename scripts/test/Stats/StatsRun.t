@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -35,7 +35,7 @@ $Self->True(
 );
 
 STATID:
-for my $StatID ( sort { $a <=> $b } keys %{$Stats} ) {
+for my $StatID ( sort { int $a <=> int $b } keys %{$Stats} ) {
     my $Stat = $StatsObject->StatsGet( StatID => $StatID );
 
     next STATID if ( $Stat->{StatType} eq 'static' );

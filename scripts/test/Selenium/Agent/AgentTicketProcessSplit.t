@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -342,13 +342,17 @@ $Selenium->RunTest(
             Value   => $ListReverse{$ProcessName},
         );
 
+        $Selenium->WaitFor(
+            ElementExists => "//input[contains(\@name,'CustomerUserID')]"
+        );
+
         # Verify form is loaded.
         $Self->True(
             $Selenium->execute_script(
                 "return \$('#CustomerAutoComplete').length;"
             ),
             "Customer field is available."
-        );
+        ) || die;
 
         my $Success;
         for my $TicketID (@DeleteTicketIDs) {

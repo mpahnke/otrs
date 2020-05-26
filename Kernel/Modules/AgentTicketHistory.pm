@@ -1,5 +1,5 @@
 # --
-# Copyright (C) 2001-2019 OTRS AG, https://otrs.com/
+# Copyright (C) 2001-2020 OTRS AG, https://otrs.com/
 # --
 # This software comes with ABSOLUTELY NO WARRANTY. For details, see
 # the enclosed file COPYING for license information (GPL). If you
@@ -156,7 +156,7 @@ sub Run {
             # Make sure that the order of the values is correct, because we're now
             #   also showing the old ticket type on 'TypeUpdate'.
             elsif ( $Data->{HistoryType} eq 'TypeUpdate' ) {
-                @Values = ( $Values[2], $Values[3], $Values[0], $Values[1] );
+                @Values = ( $Values[2] // '', $Values[3] // '', $Values[0], $Values[1] );
             }
 
             $Data->{Name} = $LayoutObject->{LanguageObject}->Translate(
